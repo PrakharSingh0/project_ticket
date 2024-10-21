@@ -21,7 +21,7 @@ class _dasboardState extends State<dasboard> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        drawer: const Drawer(),
+        drawer: const Drawer(child: Column(children: [Text("User")],),),
         appBar: AppBar(
           elevation: 5,
           title: const Text("Dashboard"),

@@ -65,6 +65,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                       fontWeight: FontWeight.bold,
                       color: Colors.white),
                 ),
+                const SizedBox(height: 10),
                 Text(
                   'Create your account and start experiencing live events like never before',
                   textAlign: TextAlign.center,
@@ -89,28 +90,30 @@ class _SignupWidgetState extends State<SignupWidget> {
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(28)),
                     ),
-                    child:
-                        const Text('Sign Up', style: TextStyle(color: Colors.white)),
+                    child: const Text('Sign Up',
+                        style: TextStyle(color: Colors.white)),
                   ),
                 ),
                 const SizedBox(height: 10),
                 const Text('OR', style: TextStyle(color: Colors.white)),
                 const SizedBox(height: 10),
-            SizedBox(
-              width: 225,child: ElevatedButton.icon(
-                  onPressed: () {
-                    print('Sign up with Google pressed ...');
-                  },
-                  icon: const Icon(Icons.login_outlined, color: Colors.white),
-                  label: const Text('Sign up with Google',
-                      style: TextStyle(color: Colors.white)),
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 16, horizontal: 32),
-                    backgroundColor: Colors.grey[800],
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(28)),
-                  ),),
+                SizedBox(
+                  width: 225,
+                  child: ElevatedButton.icon(
+                    onPressed: () {
+                      print('Sign up with Google pressed ...');
+                    },
+                    icon: const Icon(Icons.login_outlined, color: Colors.white),
+                    label: const Text('Sign up with Google',
+                        style: TextStyle(color: Colors.white)),
+                    style: ElevatedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 16, horizontal: 32),
+                      backgroundColor: Colors.grey[800],
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(28)),
+                    ),
+                  ),
                 ),
                 const SizedBox(height: 20),
                 Row(
@@ -131,11 +134,10 @@ class _SignupWidgetState extends State<SignupWidget> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 20),
-                Text(
+                const Text(
                   'By signing up, you agree to our Terms and Privacy Policy',
                   textAlign: TextAlign.center,
-                  style: TextStyle(color: Colors.grey[300]),
+                  style: TextStyle(fontSize:12,color: Colors.white30),
                 ),
               ],
             ),

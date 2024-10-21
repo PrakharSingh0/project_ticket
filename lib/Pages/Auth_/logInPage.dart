@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_ticket/Pages/Auth_/signUpPage.dart';
+import 'package:project_ticket/Pages/User_/dashboard.dart';
 
 class LoginPageWidget extends StatefulWidget {
   const LoginPageWidget({super.key});
@@ -12,6 +13,8 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool _passwordVisible = false;
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -121,6 +124,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                         child: ElevatedButton(
                           onPressed: () {
                             // Handle login
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => const dasboard()));
                             print('Login button pressed...');
                           },
                           child: Text('Log In',style: TextStyle(color: Colors.white)),
