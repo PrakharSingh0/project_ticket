@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:project_ticket/Pages/User_/dashboard.dart';
 
-class  splashScreen extends StatelessWidget {
-  const splashScreen({super.key});
+class  welcome_page extends StatelessWidget {
+  const welcome_page({super.key});
 
   @override
   Widget build(context) {
-    return MaterialApp(
-      home: Scaffold(
+    return Scaffold(
         body: Container(
           width: MediaQuery.sizeOf(context).width,
           height: MediaQuery.sizeOf(context).height * 1,
@@ -15,7 +15,7 @@ class  splashScreen extends StatelessWidget {
                   image: AssetImage("assets/splashScreen.jpeg"),
                   fit: BoxFit.cover)),
           child: Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(24, 24, 24, 30),
+            padding: const EdgeInsetsDirectional.fromSTEB(20, 20, 24, 30),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -61,15 +61,23 @@ class  splashScreen extends StatelessWidget {
                   // mainAxisSize: MainAxisSize.min,
                   children: [
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
+                      padding: const EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
                       child: SizedBox(
                         width: 250,
                         height: 60,
                         child: ElevatedButton(
+
+                          onPressed: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => const dasboard()));
+                          },
+
                           style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.indigoAccent,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30.0),
+                                  ),
                               textStyle: const TextStyle(color: Colors.white)),
-                          onPressed: () {},
+
                           child: const Text(
                             'Getting Started',
                             style: TextStyle(
@@ -84,13 +92,15 @@ class  splashScreen extends StatelessWidget {
                       width: 250,
                       height: 60,
                       child: ElevatedButton(
+                        onPressed: () {},
+
                         style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.transparent,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30.0),
                                 side: const BorderSide(color: Colors.white)),
                             textStyle: const TextStyle(color: Colors.white)),
-                        onPressed: () {},
+
                         child: const Text(
                           'Sign In',
                           style: TextStyle(
@@ -106,7 +116,6 @@ class  splashScreen extends StatelessWidget {
             ),
           ),
         ),
-      ),
     );
   }
 }
