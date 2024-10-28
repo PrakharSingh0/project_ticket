@@ -65,6 +65,5 @@ class _dasboardState extends State<dasboard> {
         ),
       ),
     );
-    ;
   }
 }
