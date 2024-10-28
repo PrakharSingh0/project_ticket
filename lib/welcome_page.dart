@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:project_ticket/Pages/Auth_/logInPage.dart';
+import 'package:project_ticket/Pages/Auth_/signUpPage.dart';
 import 'package:project_ticket/Pages/User_/dashboard.dart';
 
-class  welcome_page extends StatelessWidget {
+class welcome_page extends StatelessWidget {
   const welcome_page({super.key});
 
   @override
   Widget build(context) {
     return Scaffold(
-        body: Container(
+      body: SingleChildScrollView(
+        physics: const NeverScrollableScrollPhysics(),
+        child: Container(
           width: MediaQuery.sizeOf(context).width,
           height: MediaQuery.sizeOf(context).height * 1,
           decoration: const BoxDecoration(
               image: DecorationImage(
                   image: AssetImage("assets/splashScreen.jpeg"),
-                  fit: BoxFit.cover)),
+                  fit: BoxFit.fitHeight)),
           child: Padding(
             padding: const EdgeInsetsDirectional.fromSTEB(20, 20, 24, 30),
             child: Column(
@@ -30,7 +34,6 @@ class  welcome_page extends StatelessWidget {
                         child: Text(
                           'Crowd Wave',
                           textAlign: TextAlign.center,
-
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 60,
@@ -61,23 +64,25 @@ class  welcome_page extends StatelessWidget {
                   // mainAxisSize: MainAxisSize.min,
                   children: [
                     Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
+                      padding:
+                          const EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
                       child: SizedBox(
                         width: 250,
                         height: 60,
                         child: ElevatedButton(
-
                           onPressed: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => const dasboard()));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const LoginPageWidget()));
                           },
-
                           style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.indigoAccent,
+                              backgroundColor: Colors.blue,
                               shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(30.0),
-                                  ),
+                                borderRadius: BorderRadius.circular(30.0),
+                              ),
                               textStyle: const TextStyle(color: Colors.white)),
-
                           child: const Text(
                             'Getting Started',
                             style: TextStyle(
@@ -92,15 +97,18 @@ class  welcome_page extends StatelessWidget {
                       width: 250,
                       height: 60,
                       child: ElevatedButton(
-                        onPressed: () {},
-
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const SignupWidget()));
+                        },
                         style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.transparent,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30.0),
                                 side: const BorderSide(color: Colors.white)),
                             textStyle: const TextStyle(color: Colors.white)),
-
                         child: const Text(
                           'Sign In',
                           style: TextStyle(
@@ -109,13 +117,17 @@ class  welcome_page extends StatelessWidget {
                               fontWeight: FontWeight.bold),
                         ),
                       ),
-                    )
+                    ),
+                    TextButton(onPressed: () {
+                      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const dasboard()), (route) => false);
+                    }, child: const Text("Guest Mode",style: TextStyle(fontSize: 14,color: Colors.blue),))
                   ],
                 ),
               ],
             ),
           ),
         ),
+      ),
     );
   }
 }

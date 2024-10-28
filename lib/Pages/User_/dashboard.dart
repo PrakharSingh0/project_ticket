@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:project_ticket/Pages/User_/Event.dart';
+import 'package:project_ticket/Pages/User_/my_ticket.dart';
+import 'package:project_ticket/Pages/User_/user_profile.dart';
 
 class dasboard extends StatefulWidget {
   const dasboard({super.key});
@@ -9,6 +12,14 @@ class dasboard extends StatefulWidget {
 
 class _dasboardState extends State<dasboard> {
   int _selectedIndex = 0;
+
+  final pages = [
+    const event(),
+    const myticket(),
+    const userProfile(),
+  ];
+
+
   void _onItemTapped(int index) {
     setState(
       () {
@@ -20,12 +31,20 @@ class _dasboardState extends State<dasboard> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
-        drawer: const Drawer(),
+        drawer: const Drawer(child: Column(children: [Text("User")],),),
         appBar: AppBar(
           elevation: 5,
           title: const Text("Dashboard"),
         ),
+
+        body: pages[_selectedIndex],
+
+
+
+
+
         bottomNavigationBar: BottomNavigationBar(
           elevation: 5,
           selectedFontSize: 15,
@@ -44,7 +63,6 @@ class _dasboardState extends State<dasboard> {
           selectedItemColor: Colors.blue,
           unselectedItemColor: Colors.grey,
         ),
-        body: const Text("this is dashboard ................"),
       ),
     );
     ;
