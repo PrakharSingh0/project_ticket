@@ -1,21 +1,16 @@
-# Project Crowd Wave
+# project_ticket
 
-<h3>Event Management and Ticketing App is a mobile app that helps users discover events, purchase tickets,and manage event attendance.</h3>
-<p>
-  This project aims to create a smartphone app for easy event discovery, ticket purchases, and attendance management. Users get personalized event recommendations, secure payments, and QR code tickets. Event organizers can manage events and track sales. The app connects   communities and simplifies the experience for all.
-</p>
+A new Flutter project.
 
-## Screenshots/Images
+## Getting Started
 
-## Tools and Technologies :
-- Front-End: Flutter SDK , Dart
-- Back-End Database: Firebase Firestore
-- Version Control: Git, Github
-- Testing: Flutter Test
-- IDE : Android Studio , Visual Studio Code
+This project is a starting point for a Flutter application.
 
-## Contributor
-- Prakhar Singh
-- Yuvraj Singh
-- Kartikey Pandey
-- Sohil Khan
+A few resources to get you started if this is your first Flutter project:
+
+- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
+- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+
+For help getting started with Flutter development, view the
+[online documentation](https://docs.flutter.dev/), which offers tutorials,
+samples, guidance on mobile development, and a full API reference.
