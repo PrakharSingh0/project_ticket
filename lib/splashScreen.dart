@@ -18,7 +18,7 @@ class myApp extends StatelessWidget {
 
           child: const Center(
             child: Text(
-              "Crowd Wave App",
+              "Crowd Wave",
               style: TextStyle(color: Colors.white, fontWeight:FontWeight.bold,fontSize: 64),
             ),
           ),
