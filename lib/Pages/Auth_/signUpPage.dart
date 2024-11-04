@@ -1,25 +1,52 @@
+// Import Firebase Plugin
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:project_ticket/service/firebaseAuthService.dart';
+
+// Import Flutter Plugin
 import 'package:flutter/material.dart';
+
+// Import Page route
 import 'package:project_ticket/Pages/Auth_/logInPage.dart';
 
+import '../User_/dashboard.dart';
+
+
 class SignupWidget extends StatefulWidget {
-  const SignupWidget({Key? key}) : super(key: key);
+  const SignupWidget({super.key});
 
   @override
   State<SignupWidget> createState() => _SignupWidgetState();
 }
 
 class _SignupWidgetState extends State<SignupWidget> {
-  final _fullNameController = TextEditingController();
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
+
+  String? errorMassage ='';
+  bool isLogin =true;
+
+  // Text Field Controller
+  final TextEditingController _userNameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   bool _passwordVisible = false;
 
   @override
   void dispose() {
-    _fullNameController.dispose();
+    _userNameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
+  }
+
+
+  Future<void> createUserWithEmailAndPassword() async{
+    try{
+      await Auth().createUserWithEmailAndPassword(email: _emailController.text, password: _passwordController.text);
+    } on FirebaseAuthException
+    catch(e){
+      setState(() {
+        errorMassage=e.message;
+      });
+    }
   }
 
   @override
@@ -33,7 +60,8 @@ class _SignupWidgetState extends State<SignupWidget> {
           decoration: const BoxDecoration(
               image: DecorationImage(
                   image: AssetImage("assets/splashScreen.jpeg"),
-                  fit: BoxFit.fitHeight)),
+                  fit: BoxFit.fitHeight)
+          ),
           child: Padding(
             padding: const EdgeInsets.all(24.0),
             child: Column(
@@ -72,16 +100,90 @@ class _SignupWidgetState extends State<SignupWidget> {
                   style: TextStyle(fontSize: 18, color: Colors.grey[300]),
                 ),
                 const SizedBox(height: 20),
-                _buildTextField(_fullNameController, 'Full Name', false),
-                _buildTextField(_emailController, 'Email', false,
-                    TextInputType.emailAddress),
-                _buildTextField(_passwordController, 'Password', true),
+
+                // Input Text Field ------------->
+
+                Column(
+                  children: [
+                    TextField(
+                      controller: _userNameController,
+                      decoration: InputDecoration(
+                        labelText: 'UserName',
+                        filled: true,
+                        fillColor: Colors.white.withOpacity(0.2),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          borderSide:
+                          const BorderSide(color: Colors.transparent),
+                        ),
+                      ),
+                      keyboardType: TextInputType.emailAddress,
+                    ),
+                    const SizedBox(height: 16),
+                    TextField(
+                      controller: _emailController,
+                      decoration: InputDecoration(
+                        labelText: 'Email',
+                        filled: true,
+                        fillColor: Colors.white.withOpacity(0.2),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          borderSide:
+                              const BorderSide(color: Colors.transparent),
+                        ),
+                      ),
+                      keyboardType: TextInputType.emailAddress,
+                    ),
+                    const SizedBox(height: 16),
+                    TextField(
+                      controller: _passwordController,
+                      obscureText: !_passwordVisible,
+                      decoration: InputDecoration(
+                        labelText: 'Password',
+                        filled: true,
+                        fillColor: Colors.white.withOpacity(0.2),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          borderSide: const BorderSide(color: Colors.white),
+                        ),
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            _passwordVisible
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                            color: Colors.white,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _passwordVisible = !_passwordVisible;
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+
+                // _buildTextField(_userNameController, 'UserName', false),
+                // _buildTextField(_emailController, 'Email', false,
+                //     TextInputType.emailAddress),
+                // _buildTextField(_passwordController, 'Password', true),
+
                 const SizedBox(height: 10),
                 SizedBox(
                   width: 225,
                   child: ElevatedButton(
-                    onPressed: () {
-                      print('Button pressed ...');
+                    onPressed: () async {
+                      final user =await Auth().createUserWithEmailAndPassword(email: _emailController.text, password: _passwordController.text);
+                      await Auth().currentUser?.updateDisplayName(_userNameController.text);
+                      if (User != null) {
+                        print("user logged in");
+                        Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const dasboard()));
+                      }
+
                     },
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(
@@ -137,7 +239,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                 const Text(
                   'By signing up, you agree to our Terms and Privacy Policy',
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize:12,color: Colors.white30),
+                  style: TextStyle(fontSize: 12, color: Colors.white30),
                 ),
               ],
             ),
@@ -146,6 +248,8 @@ class _SignupWidgetState extends State<SignupWidget> {
       ),
     );
   }
+
+  // Text Field -------------->
 
   Widget _buildTextField(
       TextEditingController controller, String label, bool isPassword,
@@ -157,26 +261,25 @@ class _SignupWidgetState extends State<SignupWidget> {
         obscureText: isPassword && !_passwordVisible,
         keyboardType: keyboardType ?? TextInputType.text,
         decoration: InputDecoration(
-          labelText: label,
-          filled: true,
-          fillColor: Colors.white.withOpacity(0.3),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(8),
-            borderSide: const BorderSide(color: Colors.white),
-          ),
-          suffixIcon: isPassword
-              ? IconButton(
-                  icon: Icon(_passwordVisible
-                      ? Icons.visibility
-                      : Icons.visibility_off),
-                  onPressed: () {
-                    setState(() {
-                      _passwordVisible = !_passwordVisible;
-                    });
-                  },
-                )
-              : null,
-        ),
+            labelText: label,
+            filled: true,
+            fillColor: Colors.white.withOpacity(0.5),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(8),
+              borderSide: const BorderSide(color: Colors.white),
+            ),
+            suffixIcon: isPassword
+                ? IconButton(
+                    icon: Icon(_passwordVisible
+                        ? Icons.visibility
+                        : Icons.visibility_off),
+                    onPressed: () {
+                      setState(() {
+                        _passwordVisible = !_passwordVisible;
+                      });
+                    },
+                  )
+                : null),
       ),
     );
   }
