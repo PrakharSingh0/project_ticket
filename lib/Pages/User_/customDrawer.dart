@@ -1,14 +1,17 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:project_ticket/Pages/User_/user_profile.dart';
-import 'package:project_ticket/Pages/User_/dashboard.dart';
+import 'package:project_ticket/Pages/miscellaneous/helpAndSupport.dart';
 
 import '../../service/firebaseAuthService.dart';
 import '../../welcome_page.dart';
 
 class customDrawer extends StatelessWidget {
+  customDrawer({super.key});
+
   final User? user = Auth().currentUser;
+
   final String? name = Auth().currentUser?.displayName;
+
   final String? email = Auth().currentUser?.email;
 
   @override
@@ -46,12 +49,18 @@ class customDrawer extends StatelessWidget {
             ListTile(
               leading: const Icon(Icons.notifications_active),
               title: const Text(' Notification '),
-              onTap: () {},
+              onTap: () {
+              },
             ),
             ListTile(
               leading: const Icon(Icons.help),
               title: const Text(' Help and Support '),
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const helpAndSupport()));
+              },
             ),
             ListTile(
               leading: const Icon(Icons.settings),
@@ -72,13 +81,11 @@ class customDrawer extends StatelessWidget {
               title: const Text(' Sign Out '),
               onTap: () {
                 Auth().signOut();
-                if (User != null) {
-                  print("user logged in");
-                  Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const welcome_page()));
-                }
+                print("user logged in");
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const welcome_page()));
               },
             ),
             // ],)
