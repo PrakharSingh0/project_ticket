@@ -1,4 +1,13 @@
+// Import Firebase Plugin
+import 'dart:developer';
+
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:project_ticket/service/firebaseAuthService.dart';
+
+// Import Flutter Plugin
 import 'package:flutter/material.dart';
+
+// Import Page Route
 import 'package:project_ticket/Pages/Auth_/signUpPage.dart';
 import 'package:project_ticket/Pages/User_/dashboard.dart';
 
@@ -10,11 +19,56 @@ class LoginPageWidget extends StatefulWidget {
 }
 
 class _LoginPageWidgetState extends State<LoginPageWidget> {
+  String? errorMassage = '';
+  bool isLogin = true;
+
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool _passwordVisible = false;
 
+  Future<void> signInWithEmailAndPassword() async {
+    try {
+      await Auth().signInWithEmailAndPassword(
+        email: _emailController.text,
+        password: _passwordController.text,
+      );
+    } on FirebaseAuthException catch (e) {
+      setState(() {
+        errorMassage = e.message;
+      });
+    }
+  }
 
+  _login() async {}
+
+  // Widget _entryField(
+  //   String title,
+  //   TextEditingController controller){
+  //   return TextField(
+  //     controller: controller,
+  //     decoration: InputDecoration(
+  //       labelText: title,
+  //       filled: true,
+  //       fillColor: Colors.white.withOpacity(0.2),
+  //       border: OutlineInputBorder(
+  //         borderRadius: BorderRadius.circular(8),
+  //         borderSide: const BorderSide(color: Colors.transparent),
+  //       ),
+  //     ),
+  //   );
+  // }
+
+  Widget _errorMassage() {
+    return Text(errorMassage == '' ? '' : "Humm? $errorMassage");
+  }
+
+// Widget _submitButton(){
+//     return ElevatedButton(onPressed: islogin ? signInWithEmailandPassword :createUserWithEmailandPassword,
+//         child: const Text('Log In',style: TextStyle(color: Colors.white)),
+//     );
+// }
+
+  // App structure ---------->
 
   @override
   Widget build(BuildContext context) {
@@ -22,15 +76,16 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
       body: SingleChildScrollView(
         physics: const NeverScrollableScrollPhysics(),
         child: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
+          // width: MediaQuery.of(context).size.width,
+          // height: MediaQuery.of(context).size.height,
           decoration: const BoxDecoration(
               image: DecorationImage(
                   image: AssetImage("assets/splashScreen.jpeg"),
                   fit: BoxFit.fitHeight)),
           child: Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.all(24.0),
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Align(
@@ -42,12 +97,15 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                           Navigator.pop(context);
                         },
                         child: const Row(children: [
-                          Icon(Icons.arrow_back_rounded,color: Colors.white,),
-                          Text("Back",style: TextStyle(color: Colors.white)),
+                          Icon(
+                            Icons.arrow_back_rounded,
+                            color: Colors.white,
+                          ),
+                          Text("Back", style: TextStyle(color: Colors.white)),
                         ]),
                       ),
                     )),
-                SizedBox.fromSize(size: const Size.square(120)),
+                SizedBox.fromSize(size: const Size.square(100)),
                 const Text(
                   'Welcome Back!',
                   style: TextStyle(
@@ -70,6 +128,9 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                 SizedBox.fromSize(
                   size: const Size.square(50),
                 ),
+
+                // Input Field --------------->
+
                 Container(
                   decoration: BoxDecoration(
                     //color: Colors.white.withOpacity(0.2),
@@ -83,10 +144,11 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                         decoration: InputDecoration(
                           labelText: 'Email',
                           filled: true,
-                          fillColor: Colors.white.withOpacity(0.2),
+                          fillColor: Colors.white.withOpacity(0.5),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
-                            borderSide: const BorderSide(color: Colors.transparent),
+                            borderSide:
+                                const BorderSide(color: Colors.transparent),
                           ),
                         ),
                         keyboardType: TextInputType.emailAddress,
@@ -98,7 +160,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                         decoration: InputDecoration(
                           labelText: 'Password',
                           filled: true,
-                          fillColor: Colors.white.withOpacity(0.2),
+                          fillColor: Colors.white.withOpacity(0.5),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
                             borderSide: const BorderSide(color: Colors.white),
@@ -119,16 +181,25 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                         ),
                       ),
                       const SizedBox(height: 16),
+                      _errorMassage(),
+                      const SizedBox(height: 16),
                       SizedBox(
                         width: 220,
                         child: ElevatedButton(
-                          onPressed: () {
+                          onPressed: () async {
                             // Handle login
-                            Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const dasboard()), (route) => false);
-                            //Navigator.push(context, MaterialPageRoute(builder: (context) => const dasboard()));
-                            print('Login button pressed...');
+                            final user = await Auth()
+                                .signInWithEmailAndPassword(
+                                    email: _emailController.text,
+                                    password: _passwordController.text);
+                            if (User != null) {
+                              log("user logged in");
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const dasboard()));
+                            }
                           },
-                          child: Text('Log In',style: TextStyle(color: Colors.white)),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.blue,
                             padding: const EdgeInsets.symmetric(vertical: 16),
@@ -138,6 +209,8 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                             textStyle: const TextStyle(
                                 fontSize: 16, color: Colors.white),
                           ),
+                          child: const Text('Log In',
+                              style: TextStyle(color: Colors.white)),
                         ),
                       ),
                     ],
@@ -146,25 +219,27 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                 const SizedBox(height: 10),
                 const Text('OR', style: TextStyle(color: Colors.white)),
                 const SizedBox(height: 10),
-            SizedBox(
-              width: 220,
-                child:ElevatedButton.icon(
-                  onPressed: () {
-                    // Handle Google login
-                    print('Google login pressed...');
-                  },
-                  icon: const Icon(Icons.login_outlined, color: Colors.white),
-                  label: const Text('Log in with Google',style: TextStyle(color: Colors.white)),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.transparent,
-                    side: const BorderSide(color: Colors.white, width: 2),
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 16, horizontal: 32),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(28),
+                SizedBox(
+                  width: 220,
+                  child: ElevatedButton.icon(
+                    onPressed: () {
+                      // Handle Google login
+                      print('Google login pressed...');
+                    },
+                    icon: const Icon(Icons.login_outlined, color: Colors.white),
+                    label: const Text('Log in with Google',
+                        style: TextStyle(color: Colors.white)),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.transparent,
+                      side: const BorderSide(color: Colors.white, width: 2),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 16, horizontal: 32),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(28),
+                      ),
                     ),
                   ),
-                ),),
+                ),
                 const SizedBox(height: 10),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,

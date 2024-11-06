@@ -17,7 +17,12 @@ class welcome_page extends StatelessWidget {
           decoration: const BoxDecoration(
               image: DecorationImage(
                   image: AssetImage("assets/splashScreen.jpeg"),
-                  fit: BoxFit.fitHeight)),
+                  fit: BoxFit.fitHeight)
+              // gradient: LinearGradient(
+              //     colors: [Colors.lightBlue, Colors.lightGreenAccent],
+              //     begin: Alignment.topLeft,
+              //     end: Alignment.bottomRight)
+              ),
           child: Padding(
             padding: const EdgeInsetsDirectional.fromSTEB(20, 20, 24, 30),
             child: Column(
@@ -52,7 +57,7 @@ class welcome_page extends StatelessWidget {
                         'Experience the energy of live events like never before',
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          color: Colors.grey,
+                          color: Colors.white60,
                           fontSize: 18,
                           fontFamily: 'Inter Tight',
                         ),
@@ -75,7 +80,7 @@ class welcome_page extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        const LoginPageWidget()));
+                                        const SignupWidget()));
                           },
                           style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.blue,
@@ -101,7 +106,8 @@ class welcome_page extends StatelessWidget {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const SignupWidget()));
+                                  builder: (context) =>
+                                      const LoginPageWidget()));
                         },
                         style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.transparent,
@@ -110,7 +116,7 @@ class welcome_page extends StatelessWidget {
                                 side: const BorderSide(color: Colors.white)),
                             textStyle: const TextStyle(color: Colors.white)),
                         child: const Text(
-                          'Sign In',
+                          'Log In',
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 24,
@@ -118,9 +124,18 @@ class welcome_page extends StatelessWidget {
                         ),
                       ),
                     ),
-                    TextButton(onPressed: () {
-                      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const dasboard()), (route) => false);
-                    }, child: const Text("Guest Mode",style: TextStyle(fontSize: 14,color: Colors.blue),))
+                    TextButton(
+                        onPressed: () {
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const dasboard()),
+                              (route) => false);
+                        },
+                        child: const Text(
+                          "Guest Mode",
+                          style: TextStyle(fontSize: 14, color: Colors.blue),
+                        ))
                   ],
                 ),
               ],
