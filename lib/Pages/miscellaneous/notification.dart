@@ -8,7 +8,7 @@ class helpAndSupport extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(leading: BackButton(onPressed: () {
         Navigator.pop(context);
-      }),title: const Text("Supports"),
+      }),title: const Text("Notification"),
       ),
       body: const Padding(
         padding: EdgeInsets.all(20),
