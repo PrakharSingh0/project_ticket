@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:project_ticket/Pages/User_/Event.dart';
+import 'package:project_ticket/Pages/User_/customDrawer.dart';
 import 'package:project_ticket/Pages/User_/my_ticket.dart';
 import 'package:project_ticket/Pages/User_/user_profile.dart';
 import 'package:project_ticket/service/firebaseAuthService.dart';
@@ -42,7 +43,7 @@ class _dasboardState extends State<dasboard> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        drawer: const Drawer(child: Column()),
+        drawer: customDrawer(),
         appBar: AppBar(
           elevation: 5,
           actions: [

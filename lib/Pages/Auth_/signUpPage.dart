@@ -110,7 +110,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                       decoration: InputDecoration(
                         labelText: 'UserName',
                         filled: true,
-                        fillColor: Colors.white.withOpacity(0.2),
+                        fillColor: Colors.white.withOpacity(0.5),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
                           borderSide:
@@ -125,7 +125,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                       decoration: InputDecoration(
                         labelText: 'Email',
                         filled: true,
-                        fillColor: Colors.white.withOpacity(0.2),
+                        fillColor: Colors.white.withOpacity(0.5),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
                           borderSide:
@@ -141,7 +141,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                       decoration: InputDecoration(
                         labelText: 'Password',
                         filled: true,
-                        fillColor: Colors.white.withOpacity(0.2),
+                        fillColor: Colors.white.withOpacity(0.5),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),
                           borderSide: const BorderSide(color: Colors.white),

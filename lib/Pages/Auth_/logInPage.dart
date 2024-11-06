@@ -76,15 +76,16 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
       body: SingleChildScrollView(
         physics: const NeverScrollableScrollPhysics(),
         child: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
+          // width: MediaQuery.of(context).size.width,
+          // height: MediaQuery.of(context).size.height,
           decoration: const BoxDecoration(
               image: DecorationImage(
                   image: AssetImage("assets/splashScreen.jpeg"),
                   fit: BoxFit.fitHeight)),
           child: Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.all(24.0),
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Align(
@@ -104,7 +105,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                         ]),
                       ),
                     )),
-                SizedBox.fromSize(size: const Size.square(120)),
+                SizedBox.fromSize(size: const Size.square(100)),
                 const Text(
                   'Welcome Back!',
                   style: TextStyle(
