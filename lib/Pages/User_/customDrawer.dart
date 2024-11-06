@@ -1,0 +1,90 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:project_ticket/Pages/User_/user_profile.dart';
+import 'package:project_ticket/Pages/User_/dashboard.dart';
+
+import '../../service/firebaseAuthService.dart';
+import '../../welcome_page.dart';
+
+class customDrawer extends StatelessWidget {
+  final User? user = Auth().currentUser;
+  final String? name = Auth().currentUser?.displayName;
+  final String? email = Auth().currentUser?.email;
+
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      child: Expanded(
+        child: Column(
+          children: [
+            DrawerHeader(
+              padding: const EdgeInsets.all(0),
+              decoration: const BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage("assets/splashScreen.jpeg"),
+                      fit: BoxFit.cover)),
+              child: UserAccountsDrawerHeader(
+                decoration: const BoxDecoration(color: Colors.transparent),
+                accountName: Text(name ?? 'Guest'),
+                accountEmail: Text(email ?? "xyz-101@domain.com"),
+                currentAccountPictureSize: const Size.square(60),
+                currentAccountPicture: const CircleAvatar(
+                    backgroundColor: Colors.white,
+                    child: Icon(Icons.account_circle, size: 60)),
+              ),
+            ),
+            ListTile(
+              leading: const Icon(Icons.person),
+              title: const Text(' My Profile '),
+              onTap: () {},
+            ),
+            ListTile(
+              leading: const Icon(Icons.qr_code_scanner),
+              title: const Text(' My Ticket '),
+              onTap: () {},
+            ),
+            ListTile(
+              leading: const Icon(Icons.notifications_active),
+              title: const Text(' Notification '),
+              onTap: () {},
+            ),
+            ListTile(
+              leading: const Icon(Icons.help),
+              title: const Text(' Help and Support '),
+              onTap: () {},
+            ),
+            ListTile(
+              leading: const Icon(Icons.settings),
+              title: const Text(' Setting '),
+              onTap: () {},
+            ),
+
+            const Expanded(
+              child: Align(alignment: Alignment.bottomCenter, child: null),
+            ),
+            ListTile(
+              leading: const Icon(Icons.change_circle),
+              title: const Text(' Switch User Mode'),
+              onTap: () {},
+            ),
+            ListTile(
+              leading: const Icon(Icons.exit_to_app),
+              title: const Text(' Sign Out '),
+              onTap: () {
+                Auth().signOut();
+                if (User != null) {
+                  print("user logged in");
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const welcome_page()));
+                }
+              },
+            ),
+            // ],)
+          ],
+        ),
+      ),
+    );
+  }
+}
