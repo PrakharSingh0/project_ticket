@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project_ticket/Pages/Auth_/logInPage.dart';
 import 'package:project_ticket/Pages/Auth_/signUpPage.dart';
-import 'package:project_ticket/Pages/User_/dashboard.dart';
+import 'package:project_ticket/Pages/User_/homePage.dart';
 
 class welcome_page extends StatelessWidget {
   const welcome_page({super.key});
@@ -129,7 +129,7 @@ class welcome_page extends StatelessWidget {
                           Navigator.pushAndRemoveUntil(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const dasboard()),
+                                  builder: (context) => const homePage()),
                               (route) => false);
                         },
                         child: const Text(

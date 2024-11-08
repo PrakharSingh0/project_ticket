@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 // Import Page route
 import 'package:project_ticket/Pages/Auth_/logInPage.dart';
 
-import '../User_/dashboard.dart';
+import '../User_/homePage.dart';
 
 
 class SignupWidget extends StatefulWidget {
@@ -49,6 +49,10 @@ class _SignupWidgetState extends State<SignupWidget> {
     }
   }
 
+  Widget _errorMassage() {
+    return Text("Error : $errorMassage",style: const TextStyle(color: Colors.red,fontSize: 15),);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,8 +69,8 @@ class _SignupWidgetState extends State<SignupWidget> {
           child: Padding(
             padding: const EdgeInsets.all(24.0),
             child: Column(
+              mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Align(
                     alignment: Alignment.topLeft,
@@ -164,11 +168,8 @@ class _SignupWidgetState extends State<SignupWidget> {
                   ],
                 ),
 
-                // _buildTextField(_userNameController, 'UserName', false),
-                // _buildTextField(_emailController, 'Email', false,
-                //     TextInputType.emailAddress),
-                // _buildTextField(_passwordController, 'Password', true),
-
+                const SizedBox(height: 10),
+                _errorMassage(),
                 const SizedBox(height: 10),
                 SizedBox(
                   width: 225,
@@ -181,7 +182,7 @@ class _SignupWidgetState extends State<SignupWidget> {
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const dasboard()));
+                                builder: (context) => const homePage()));
                       }
 
                     },
@@ -249,38 +250,4 @@ class _SignupWidgetState extends State<SignupWidget> {
     );
   }
 
-  // Text Field -------------->
-
-  Widget _buildTextField(
-      TextEditingController controller, String label, bool isPassword,
-      [TextInputType? keyboardType]) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: TextField(
-        controller: controller,
-        obscureText: isPassword && !_passwordVisible,
-        keyboardType: keyboardType ?? TextInputType.text,
-        decoration: InputDecoration(
-            labelText: label,
-            filled: true,
-            fillColor: Colors.white.withOpacity(0.5),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: const BorderSide(color: Colors.white),
-            ),
-            suffixIcon: isPassword
-                ? IconButton(
-                    icon: Icon(_passwordVisible
-                        ? Icons.visibility
-                        : Icons.visibility_off),
-                    onPressed: () {
-                      setState(() {
-                        _passwordVisible = !_passwordVisible;
-                      });
-                    },
-                  )
-                : null),
-      ),
-    );
-  }
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class helpAndSupport extends StatelessWidget {
-  const helpAndSupport({super.key});
+class notification extends StatelessWidget {
+  const notification({super.key});
 
   @override
   Widget build(BuildContext context) {

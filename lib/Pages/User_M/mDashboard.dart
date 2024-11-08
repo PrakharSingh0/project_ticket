@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:project_ticket/Pages/User_/eventcard.dart';
+import 'package:project_ticket/Pages/User_/cards/eventcard.dart';
 
 class event extends StatelessWidget {
   const event({super.key});
@@ -13,6 +13,6 @@ class event extends StatelessWidget {
           eventcard(),eventcard(),eventcard(),eventcard(),eventcard(),
         ],
       ),
-    ),);
+      ),);
   }
 }

@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:project_ticket/Pages/User_/dashboard.dart';
 
 class Auth {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
@@ -26,6 +25,7 @@ class Auth {
       {required String email, required String password}) async {
     await _firebaseAuth.signInWithEmailAndPassword(
         email: email, password: password);
+    return null;
   }
 
   Future<void> signOut() async {

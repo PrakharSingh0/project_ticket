@@ -1,9 +1,15 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'package:project_ticket/Pages/miscellaneous/helpAndSupport.dart';
 
+import 'package:flutter/material.dart';
+import 'package:project_ticket/Pages/miscellaneous/profilePage.dart';
+import 'package:project_ticket/Pages/User_M/mHomePage.dart';
+import 'package:project_ticket/Pages/miscellaneous/helpAndSupport.dart';
 import '../../service/firebaseAuthService.dart';
 import '../../welcome_page.dart';
+import '../miscellaneous/notification.dart';
+import '../miscellaneous/setting.dart';
+
+// Firebase Auth
+import 'package:firebase_auth/firebase_auth.dart';
 
 class customDrawer extends StatelessWidget {
   customDrawer({super.key});
@@ -39,17 +45,24 @@ class customDrawer extends StatelessWidget {
             ListTile(
               leading: const Icon(Icons.person),
               title: const Text(' My Profile '),
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const profilePage()));
+              },
             ),
             ListTile(
               leading: const Icon(Icons.qr_code_scanner),
               title: const Text(' My Ticket '),
-              onTap: () {},
+              onTap: () {
+              },
             ),
             ListTile(
               leading: const Icon(Icons.notifications_active),
               title: const Text(' Notification '),
               onTap: () {
+                Navigator.push(context,MaterialPageRoute(builder: (context) => const notification()));
               },
             ),
             ListTile(
@@ -59,13 +72,18 @@ class customDrawer extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const helpAndSupport()));
+                        builder: (context) => HelpSupportPage()));
               },
             ),
             ListTile(
               leading: const Icon(Icons.settings),
               title: const Text(' Setting '),
-              onTap: () {},
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => SettingsPage()));
+              },
             ),
 
             const Expanded(
@@ -74,7 +92,12 @@ class customDrawer extends StatelessWidget {
             ListTile(
               leading: const Icon(Icons.change_circle),
               title: const Text(' Switch User Mode'),
-              onTap: () {},
+              onTap: () {
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const mHomePage()));
+              },
             ),
             ListTile(
               leading: const Icon(Icons.exit_to_app),
