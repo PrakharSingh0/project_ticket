@@ -62,7 +62,7 @@ class mCustomDrawer extends StatelessWidget {
               leading: const Icon(Icons.notifications_active),
               title: const Text(' Notification '),
               onTap: () {
-                Navigator.push(context,MaterialPageRoute(builder: (context) => const notification()));
+                Navigator.push(context,MaterialPageRoute(builder: (context) =>  notification()));
               },
             ),
             ListTile(
@@ -82,7 +82,7 @@ class mCustomDrawer extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => SettingsPage()));
+                        builder: (context) => const SettingsPage()));
               },
             ),
 

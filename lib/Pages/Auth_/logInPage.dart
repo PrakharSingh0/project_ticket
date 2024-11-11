@@ -40,7 +40,10 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
   }
 
   Widget _errorMassage() {
-    return Text(errorMassage == '' ? '' : "Humm? $errorMassage",style: const TextStyle(color: Colors.red,fontSize: 15),);
+    return Text(
+      errorMassage == '' ? '' : "Humm? $errorMassage",
+      style: const TextStyle(color: Colors.red, fontSize: 15),
+    );
   }
 
   // App structure ---------->
@@ -111,6 +114,8 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                             TextField(
                               controller: _emailController,
                               decoration: InputDecoration(
+                                errorText: Validators.email(
+                                    _emailController.text),
                                 labelText: 'Email',
                                 filled: true,
                                 fillColor: Colors.white.withOpacity(0.5),
@@ -129,6 +134,8 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                               controller: _passwordController,
                               obscureText: !_passwordVisible,
                               decoration: InputDecoration(
+                                errorText: Validators.password(
+                                    _passwordController.text),
                                 labelText: 'Password',
                                 filled: true,
                                 fillColor: Colors.white.withOpacity(0.5),
@@ -161,33 +168,39 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                         SizedBox(
                           width: 225,
                           child: ElevatedButton(
-                            onPressed: () async {
-                              // Handle login
-                              final user = await Auth()
-                                  .signInWithEmailAndPassword(
-                                      email: _emailController.text,
-                                      password: _passwordController.text);
-                              if (User != null) {
+                              onPressed: () async {
+                                // Handle login
+                                final user = await Auth()
+                                    .signInWithEmailAndPassword(
+                                        email: _emailController.text,
+                                        password: _passwordController.text);
                                 log("user logged in");
                                 Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
                                             const homePage()));
-                              }
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.blue,
-                              padding: const EdgeInsets.symmetric(vertical: 16),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(28),
+                                                            },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.blue,
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 16),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(28),
+                                ),
+                                textStyle: const TextStyle(
+                                    fontSize: 16, color: Colors.white),
                               ),
-                              textStyle: const TextStyle(
-                                  fontSize: 16, color: Colors.white),
-                            ),
-                            child: const Text('Log In',
-                                style: TextStyle(color: Colors.white)),
-                          ),
+                              child: const Row(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  SizedBox(width: 20,height: 20,child: CircularProgressIndicator(color: Colors.white,)),
+                                  SizedBox(width: 15,),
+                                  Text('Log In',
+                                      style: TextStyle(color: Colors.white)),
+                                ],
+                              )),
                         ),
                         const SizedBox(height: 10),
                         const Text('OR', style: TextStyle(color: Colors.white)),
@@ -244,5 +257,23 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                         ),
                       ])))),
     );
+  }
+}
+
+class Validators {
+  static password(String? txt) {
+    if (txt == null || txt.isEmpty) {
+      return "Password Required !";
+    }
+    else {
+      return;
+    }
+  }static email(String? txt) {
+    if (txt == null || txt.isEmpty) {
+      return "Email Required !";
+    }
+    else {
+      return;
+    }
   }
 }

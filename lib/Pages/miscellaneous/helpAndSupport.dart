@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'faqsPage.dart';
+
 class helpAndSupport extends StatelessWidget {
   const helpAndSupport({super.key});
 
@@ -27,6 +29,8 @@ class helpAndSupport extends StatelessWidget {
 
 
 class HelpSupportPage extends StatelessWidget {
+  const HelpSupportPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -108,19 +112,3 @@ class HelpSupportPage extends StatelessWidget {
   }
 }
 
-class FAQPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('FAQs'),
-      ),
-      body: Center(
-        child: const Text(
-          'Frequently Asked Questions go here',
-          style: TextStyle(fontSize: 16),
-        ),
-      ),
-    );
-  }
-}

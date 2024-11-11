@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:project_ticket/Pages/User_/dashboard.dart';
 import 'package:project_ticket/Pages/User_/myTicket.dart';
-import 'package:project_ticket/Pages/User_/user_profile.dart';
+import 'package:project_ticket/Pages/miscellaneous/profilePage.dart';
 import 'package:project_ticket/service/firebaseAuthService.dart';
 import 'package:project_ticket/welcome_page.dart';
 
@@ -25,7 +25,7 @@ class _mHomePageState extends State<mHomePage> {
   final pages = [
     const dashboard(),
     const myTicket(),
-    const userProfile(),
+    const profilePage(),
   ];
 
   void _onItemTapped(int index) {
@@ -59,15 +59,13 @@ class _mHomePageState extends State<mHomePage> {
                         TextButton(
                           onPressed: () {
                             Auth().signOut();
-                            if (User != null) {
-                              print("user logged in");
-                              Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                      const welcome_page()));
-                            }
-                          },
+                            print("user logged in");
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                    const welcome_page()));
+                                                    },
                           child: const Text("Sign Out"),
                         )
                       ],

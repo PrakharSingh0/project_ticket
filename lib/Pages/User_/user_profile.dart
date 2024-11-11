@@ -8,7 +8,7 @@ class userProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget _text(data) {
+    Widget text(data) {
       return Text(
         data,
         style: const TextStyle(fontSize: 16),
@@ -35,15 +35,15 @@ class userProfile extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  _text("Name : $name"),
+                  text("Name : $name"),
                   const Divider(),
-                  _text("Email : $email"),
+                  text("Email : $email"),
                   const Divider(),
-                  _text("Contact Info : $email"),
+                  text("Contact Info : $email"),
                   const Divider(),
-                  _text("Email : $email"),
+                  text("Email : $email"),
                   const Divider(),
-                  _text("Email : $email"),
+                  text("Email : $email"),
                   const Divider(),
                 ],
               ),

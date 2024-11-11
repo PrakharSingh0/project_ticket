@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:project_ticket/Pages/User_/dashboard.dart';
 import 'package:project_ticket/Pages/User_/customDrawer.dart';
 import 'package:project_ticket/Pages/User_/myTicket.dart';
-import 'package:project_ticket/Pages/User_/user_profile.dart';
 import 'package:project_ticket/service/firebaseAuthService.dart';
 import 'package:project_ticket/welcome_page.dart';
+
+import '../miscellaneous/profilePage.dart';
 
 class homePage extends StatefulWidget {
   const homePage({super.key});
@@ -25,7 +26,7 @@ class _homePageState extends State<homePage> {
   final pages = [
     const dashboard(),
     const myTicket(),
-    const userProfile(),
+    const profilePage(),
   ];
 
   void _onItemTapped(int index) {
@@ -59,15 +60,13 @@ class _homePageState extends State<homePage> {
                         TextButton(
                           onPressed: () {
                             Auth().signOut();
-                            if (User != null) {
-                              print("user logged in");
-                              Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const welcome_page()));
-                            }
-                          },
+                            print("user logged in");
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const welcome_page()));
+                                                    },
                           child: const Text("Sign Out"),
                         )
                       ],

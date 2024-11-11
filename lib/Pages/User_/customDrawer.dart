@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:project_ticket/Pages/User_/myTicket.dart';
 import 'package:project_ticket/Pages/miscellaneous/profilePage.dart';
 import 'package:project_ticket/Pages/User_M/mHomePage.dart';
 import 'package:project_ticket/Pages/miscellaneous/helpAndSupport.dart';
@@ -56,13 +57,14 @@ class customDrawer extends StatelessWidget {
               leading: const Icon(Icons.qr_code_scanner),
               title: const Text(' My Ticket '),
               onTap: () {
+                Navigator.push(context,MaterialPageRoute(builder: (context) => const myTicket()));
               },
             ),
             ListTile(
               leading: const Icon(Icons.notifications_active),
               title: const Text(' Notification '),
               onTap: () {
-                Navigator.push(context,MaterialPageRoute(builder: (context) => const notification()));
+                Navigator.push(context,MaterialPageRoute(builder: (context) =>  notification()));
               },
             ),
             ListTile(
@@ -72,7 +74,7 @@ class customDrawer extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => HelpSupportPage()));
+                        builder: (context) => const HelpSupportPage()));
               },
             ),
             ListTile(
@@ -82,7 +84,7 @@ class customDrawer extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => SettingsPage()));
+                        builder: (context) => const SettingsPage()));
               },
             ),
 

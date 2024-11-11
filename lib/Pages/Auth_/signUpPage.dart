@@ -112,6 +112,8 @@ class _SignupWidgetState extends State<SignupWidget> {
                     TextField(
                       controller: _userNameController,
                       decoration: InputDecoration(
+                        errorText: Validators.username(
+                            _userNameController.text),
                         labelText: 'UserName',
                         filled: true,
                         fillColor: Colors.white.withOpacity(0.5),
@@ -127,6 +129,8 @@ class _SignupWidgetState extends State<SignupWidget> {
                     TextField(
                       controller: _emailController,
                       decoration: InputDecoration(
+                        errorText: Validators.email(
+                            _emailController.text),
                         labelText: 'Email',
                         filled: true,
                         fillColor: Colors.white.withOpacity(0.5),
@@ -143,6 +147,8 @@ class _SignupWidgetState extends State<SignupWidget> {
                       controller: _passwordController,
                       obscureText: !_passwordVisible,
                       decoration: InputDecoration(
+                        errorText: Validators.password(
+                            _passwordController.text),
                         labelText: 'Password',
                         filled: true,
                         fillColor: Colors.white.withOpacity(0.5),
@@ -177,14 +183,12 @@ class _SignupWidgetState extends State<SignupWidget> {
                     onPressed: () async {
                       final user =await Auth().createUserWithEmailAndPassword(email: _emailController.text, password: _passwordController.text);
                       await Auth().currentUser?.updateDisplayName(_userNameController.text);
-                      if (User != null) {
-                        print("user logged in");
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const homePage()));
-                      }
-
+                      print("user logged in");
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const homePage()));
+                    
                     },
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(
@@ -249,5 +253,29 @@ class _SignupWidgetState extends State<SignupWidget> {
       ),
     );
   }
-
+}
+class Validators {
+  static email(String? txt) {
+    if (txt == null || txt.isEmpty) {
+      return "Email Required !";
+    }
+    else {
+      return;
+    }
+  }
+  static password(String? txt) {
+    if (txt == null || txt.isEmpty) {
+      return "Password Required !";
+    }
+    else {
+      return;
+    }
+  }static username(String? txt) {
+    if (txt == null || txt.isEmpty) {
+      return "Password Required !";
+    }
+    else {
+      return;
+    }
+  }
 }
