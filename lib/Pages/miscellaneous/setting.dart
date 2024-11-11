@@ -1,31 +1,8 @@
 import 'package:flutter/material.dart';
 
-// class setting extends StatelessWidget {
-//   const setting({super.key});
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(leading: BackButton(onPressed: () {
-//         Navigator.pop(context);
-//       }),title: const Text("Settings"),
-//       ),
-//       body: const Padding(
-//         padding: EdgeInsets.all(20),
-//         child: Column(
-//           children: [
-//             Text("Hi there"),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-
-
-
 class SettingsPage extends StatefulWidget {
+  const SettingsPage({super.key});
+
   @override
   _SettingsPageState createState() => _SettingsPageState();
 }
@@ -34,69 +11,125 @@ class _SettingsPageState extends State<SettingsPage> {
   bool _notificationsEnabled = true;
   bool _darkModeEnabled = false;
 
+  void _toggleDarkMode() {
+    setState(() {
+      _darkModeEnabled = !_darkModeEnabled;
+    });
+    // Additional functionality for changing the theme can be added here.
+    // E.g., integrating a ThemeProvider to manage the app's theme state.
+  }
+
+  void _showLogoutConfirmation(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Confirm Logout'),
+        content: const Text('Are you sure you want to log out?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancel'),
+          ),
+          ElevatedButton(
+            onPressed: () {
+              // Add logout functionality here
+              Navigator.pop(context);
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Logged out successfully')),
+              );
+            },
+            child: const Text('Logout'),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Settings'),
+        title: const Text('Settings'),
       ),
       body: ListView(
+        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 8),
         children: [
-          ListTile(
-            leading: Icon(Icons.notifications),
-            title: Text('Notifications'),
-            trailing: Switch(
-              value: _notificationsEnabled,
-              onChanged: (value) {
-                setState(() {
-                  _notificationsEnabled = value;
-                });
-              },
-            ),
+          SwitchListTile(
+            secondary: const Icon(Icons.notifications),
+            title: const Text('Notifications'),
+            value: _notificationsEnabled,
+            onChanged: (value) {
+              setState(() {
+                _notificationsEnabled = value;
+              });
+              // Additional code for handling notification state can go here.
+            },
+          ),
+          SwitchListTile(
+            secondary: const Icon(Icons.dark_mode),
+            title: const Text('Dark Mode'),
+            value: _darkModeEnabled,
+            onChanged: (value) => _toggleDarkMode(),
           ),
           ListTile(
-            leading: Icon(Icons.dark_mode),
-            title: Text('Dark Mode'),
-            trailing: Switch(
-              value: _darkModeEnabled,
-              onChanged: (value) {
-                setState(() {
-                  _darkModeEnabled = value;
-                });
-              },
-            ),
-          ),
-          ListTile(
-            leading: Icon(Icons.account_circle),
-            title: Text('Account Settings'),
+            leading: const Icon(Icons.account_circle),
+            title: const Text('Account Settings'),
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => AccountSettingsPage()),
+                MaterialPageRoute(
+                  builder: (context) => const AccountSettingsPage(),
+                ),
               );
             },
           ),
           ListTile(
-            leading: Icon(Icons.language),
-            title: Text('Language'),
+            leading: const Icon(Icons.language),
+            title: const Text('Language'),
             onTap: () {
+              // Show language selection dialog (optional)
+              _showLanguageDialog();
             },
           ),
           ListTile(
-            leading: Icon(Icons.help_outline),
-            title: Text('Help & Support'),
+            leading: const Icon(Icons.help_outline),
+            title: const Text('Help & Support'),
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => HelpAndSupport()),
+                MaterialPageRoute(
+                  builder: (context) => const HelpAndSupport(),
+                ),
               );
             },
           ),
           ListTile(
-            leading: Icon(Icons.logout),
-            title: Text('Logout'),
-            onTap: () {
-            },
+            leading: const Icon(Icons.logout),
+            title: const Text('Logout'),
+            onTap: () => _showLogoutConfirmation(context),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showLanguageDialog() {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Select Language'),
+        content: const Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(title: Text('English')),
+            ListTile(title: Text('Spanish')),
+            ListTile(title: Text('French')),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cancel'),
           ),
         ],
       ),
@@ -105,14 +138,22 @@ class _SettingsPageState extends State<SettingsPage> {
 }
 
 class AccountSettingsPage extends StatelessWidget {
+  const AccountSettingsPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Account Settings'),
+        title: const Text('Account Settings'),
       ),
-      body: Center(
-        child: Text('Account settings go here'),
+      body: const Center(
+        child: Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Text(
+            'Manage your account settings here. Add functionality as needed.',
+            style: TextStyle(fontSize: 16),
+          ),
+        ),
       ),
     );
   }
@@ -125,11 +166,6 @@ class HelpAndSupport extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: BackButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
         title: const Text("Help & Support"),
       ),
       body: const Padding(
