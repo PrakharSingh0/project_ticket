@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../../service/firebaseAuthService.dart';
+import '../../welcome_page.dart';
+import 'helpAndSupport.dart';
+
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
 
@@ -33,7 +37,12 @@ class _SettingsPageState extends State<SettingsPage> {
           ElevatedButton(
             onPressed: () {
               // Add logout functionality here
-              Navigator.pop(context);
+              Auth().signOut();
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                      const welcome_page()));
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text('Logged out successfully')),
               );
@@ -96,10 +105,9 @@ class _SettingsPageState extends State<SettingsPage> {
             title: const Text('Help & Support'),
             onTap: () {
               Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const HelpAndSupport(),
-                ),
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const HelpSupportPage())
               );
             },
           ),

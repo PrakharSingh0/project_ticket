@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:project_ticket/Pages/User_/cards/eventCatalog.dart';
 import 'package:project_ticket/Pages/User_/cards/eventcard.dart';
-import 'package:project_ticket/Pages/User_/cards/testCard.dart';
+
+import 'cards/eventCatalogCard.dart';
+import 'cards/trendingEventCard.dart';
 
 class dashboard extends StatefulWidget {
   const dashboard({super.key});
