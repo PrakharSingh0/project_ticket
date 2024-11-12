@@ -5,17 +5,32 @@ class testcard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(width: 280,height: 250,
-    decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border.all(
-            color: Colors.grey, width: 1.0, style: BorderStyle.solid),
-        borderRadius: BorderRadius.circular(10),boxShadow: const [BoxShadow(color: Colors.black45,offset: Offset(5, 5),blurRadius: 5)]),
-    child: Stack(
+    return Stack(
+      alignment: Alignment.center,
       children: [
-        Image.asset("assets/splashScreen.jpeg",fit: BoxFit.cover,),
-        const Text("Event")
+        SizedBox(
+          width: 300,
+          child: Image.asset(
+            "assets/splashScreen.jpeg",
+            fit: BoxFit.cover,
+          ),
+        ),
+        const Positioned(
+          left: 10,
+          bottom: 25,
+          child: Text(
+            "Event",
+            style: TextStyle(fontSize: 20, color: Colors.white),
+          ),
+        ),const Positioned(
+          left: 10,
+          bottom: 10,
+          child: Text(
+            "01-11-2024",
+            style: TextStyle(fontSize: 14, color: Colors.white),
+          ),
+        )
       ],
-    ));
+    );
   }
 }

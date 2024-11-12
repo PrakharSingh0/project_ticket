@@ -63,17 +63,20 @@ class _dashboardState extends State<dashboard> {
                   alignment: Alignment.centerLeft,
                   child: _textHeading("Trending Event")),
             ),
-            const SizedBox(
-              width: 400,
+            Container(
               height: 300,
-              child:
-                  CarouselView(itemExtent: 300, shrinkExtent: 50,padding: EdgeInsets.all(10),itemSnapping: true, children: [
-                testcard(),
-                testcard(),
-                testcard(),
-                testcard(),
-                testcard(),
-              ]),
+              child: const CarouselView(itemExtent: 300, shrinkExtent: 250,padding: EdgeInsets.all(10),itemSnapping: true, children: [
+                              testcard(),
+                              testcard(),
+                              testcard(),
+                              testcard(),
+                              testcard(),
+                              testcard(),
+                              testcard(),
+                              testcard(),
+                              testcard(),
+                              testcard(),
+                            ]),
             ),
             SingleChildScrollView(
                 padding: const EdgeInsets.fromLTRB(15, 5, 0, 10),
