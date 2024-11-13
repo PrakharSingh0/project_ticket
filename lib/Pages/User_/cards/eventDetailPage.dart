@@ -5,11 +5,18 @@ class eventDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [Container(
-        child: Hero(tag: "event",
-        child: Image.asset("assets/splashScreen.jpeg")),
-      )],
+    return Scaffold(
+      appBar: AppBar(leading: const BackButton(),),
+      body: ListView(
+        children: [
+          SizedBox(
+            height: 300,
+            child: Hero(tag: "event",
+            child: Image.asset("assets/splashScreen.jpeg",fit: BoxFit.cover,)),
+          ),
+          Text("asdasd")
+        ],
+      ),
     );
 
   }

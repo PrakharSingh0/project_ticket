@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:project_ticket/Pages/User_/dashboard.dart';
-import 'package:project_ticket/Pages/User_/myTicket.dart';
+import 'package:project_ticket/Pages/User_M/mDashboard.dart';
+import 'package:project_ticket/Pages/User_M/myEvent.dart';
 import 'package:project_ticket/Pages/miscellaneous/profilePage.dart';
 import 'package:project_ticket/service/firebaseAuthService.dart';
 import 'package:project_ticket/welcome_page.dart';
@@ -23,8 +23,8 @@ class _mHomePageState extends State<mHomePage> {
   final String? username = Auth().currentUser?.displayName;
 
   final pages = [
-    const dashboard(),
-    const myTicket(),
+    const mDashBoard(),
+    const myEvent(),
     const profilePage(),
   ];
 

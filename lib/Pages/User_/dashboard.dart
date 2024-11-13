@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_ticket/Pages/User_/cards/eventDetailPage.dart';
 import 'package:project_ticket/Pages/User_/cards/eventcard.dart';
 
 import 'cards/eventCatalogCard.dart';
@@ -63,14 +64,17 @@ class _dashboardState extends State<dashboard> {
                   alignment: Alignment.centerLeft,
                   child: _textHeading("Trending Event")),
             ),
-            const SizedBox(
+            SizedBox(
               height: 300,
               child: CarouselView(
                   itemExtent: 300,
                   shrinkExtent: 150,
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   itemSnapping: true,
-                  children: [
+                  onTap: (value) {
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => const eventDetailPage()));
+                  },
+                  children: const [
                     testcard(),
                     testcard(),
                     testcard(),
