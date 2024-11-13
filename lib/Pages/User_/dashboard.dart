@@ -63,35 +63,26 @@ class _dashboardState extends State<dashboard> {
                   alignment: Alignment.centerLeft,
                   child: _textHeading("Trending Event")),
             ),
-            Container(
+            const SizedBox(
               height: 300,
-              child: const CarouselView(itemExtent: 300, shrinkExtent: 250,padding: EdgeInsets.all(10),itemSnapping: true, children: [
-                              testcard(),
-                              testcard(),
-                              testcard(),
-                              testcard(),
-                              testcard(),
-                              testcard(),
-                              testcard(),
-                              testcard(),
-                              testcard(),
-                              testcard(),
-                            ]),
+              child: CarouselView(
+                  itemExtent: 300,
+                  shrinkExtent: 150,
+                  padding: EdgeInsets.all(10),
+                  itemSnapping: true,
+                  children: [
+                    testcard(),
+                    testcard(),
+                    testcard(),
+                    testcard(),
+                    testcard(),
+                    testcard(),
+                    testcard(),
+                    testcard(),
+                    testcard(),
+                    testcard(),
+                  ]),
             ),
-            SingleChildScrollView(
-                padding: const EdgeInsets.fromLTRB(15, 5, 0, 10),
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const testcard(),
-                      _spacer,
-                      const testcard(),
-                      _spacer,
-                      const testcard(),
-                    ])),
             Padding(
               padding: const EdgeInsets.fromLTRB(15, 5, 15, 0),
               child: Align(
