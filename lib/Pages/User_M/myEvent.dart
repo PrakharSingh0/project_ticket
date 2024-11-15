@@ -5,8 +5,16 @@ class myEvent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-
+    return Padding(
+      padding: const EdgeInsets.all(20),
+      child: Center(
+        child: SizedBox(
+            width: 200,
+            height: 60,
+            child: ElevatedButton(
+                onPressed: () {}, child: const Text("QR Scanner")),
+        ),
+      ),
     );
   }
 }

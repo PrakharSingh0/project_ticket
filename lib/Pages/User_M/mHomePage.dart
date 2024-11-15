@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:project_ticket/Pages/User_M/eventLisingPage.dart';
 import 'package:project_ticket/Pages/User_M/mDashboard.dart';
 import 'package:project_ticket/Pages/User_M/myEvent.dart';
 import 'package:project_ticket/Pages/miscellaneous/profilePage.dart';
@@ -30,7 +31,7 @@ class _mHomePageState extends State<mHomePage> {
 
   void _onItemTapped(int index) {
     setState(
-          () {
+      () {
         _selectedIndex = index;
       },
     );
@@ -53,7 +54,7 @@ class _mHomePageState extends State<mHomePage> {
                       title: const Text("Account"),
                       content: Text(
                         "User Name : $username \n"
-                            "User Email : $email ",
+                        "User Email : $email ",
                       ),
                       actions: <Widget>[
                         TextButton(
@@ -64,8 +65,8 @@ class _mHomePageState extends State<mHomePage> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                    const welcome_page()));
-                                                    },
+                                        const welcome_page()));
+                          },
                           child: const Text("Sign Out"),
                         )
                       ],
@@ -77,14 +78,20 @@ class _mHomePageState extends State<mHomePage> {
           title: const Text("M_Dashboard"),
         ),
         body: pages[_selectedIndex],
-        floatingActionButton: FloatingActionButton.extended(splashColor: Colors.greenAccent,label:const Text("Host Event"),icon: const Icon(Icons.event),onPressed: (){}),
+        floatingActionButton: FloatingActionButton.extended(
+            splashColor: Colors.greenAccent,
+            label: const Text("Host Event"),
+            icon: const Icon(Icons.event),
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => const eventListingPage()));
+            }),
         bottomNavigationBar: BottomNavigationBar(
           elevation: 5,
           selectedFontSize: 15,
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.home), label: "Dashboard"),
             BottomNavigationBarItem(
-                icon: Icon(Icons.qr_code_scanner), label: "My Ticket"),
+                icon: Icon(Icons.qr_code_scanner), label: "My Event"),
             BottomNavigationBarItem(
                 icon: Icon(Icons.account_circle), label: "User Profile"),
           ],

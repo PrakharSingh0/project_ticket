@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:project_ticket/Pages/User_M/cards/timePicker.dart';
+
+import 'cards/datePicker.dart';
 
 class eventListingPage extends StatefulWidget {
   const eventListingPage({super.key});
@@ -87,6 +90,8 @@ class _eventListingPageState extends State<eventListingPage> {
               });
             },
           ),
+          const timePicker(),
+          const datePickerCard(),
         ]),
       ),
     );

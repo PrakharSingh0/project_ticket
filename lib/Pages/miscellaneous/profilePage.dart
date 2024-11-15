@@ -25,7 +25,6 @@ class _profilePageState extends State<profilePage> {
   void initState() {
     super.initState();
 
-
     final User? user = Auth().currentUser;
     _nameController.text = user?.displayName ?? '';
     _emailController.text = user?.email ?? '';

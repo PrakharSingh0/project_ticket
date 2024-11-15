@@ -72,7 +72,10 @@ class _dashboardState extends State<dashboard> {
                   padding: const EdgeInsets.all(10),
                   itemSnapping: true,
                   onTap: (value) {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => const eventDetailPage()));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const eventDetailPage()));
                   },
                   children: const [
                     testcard(),
