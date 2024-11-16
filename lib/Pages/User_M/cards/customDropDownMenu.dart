@@ -29,18 +29,17 @@ class _customDropdownMenuState extends State<customDropdownMenu> {
   Widget build(BuildContext context) {
     return DropdownButton<String>(
       menuMaxHeight: 300,
-      menuWidth: 180,
+      // menuWidth: 150,
+      autofocus: true,
       value: _selectedValue,
       items: widget.listData.map((String value) {
         return DropdownMenuItem<String>(
           value: value,
-          child: SizedBox(
-              width: 120,
-              child: Text(textAlign: TextAlign.center,
+          child:  Text(textAlign: TextAlign.center,
                 value,
                 style: const TextStyle(
-                    fontSize: 18, fontWeight: FontWeight.normal,),
-              )),
+                    fontSize: 16, fontWeight: FontWeight.normal,),
+              ),
         );
       }).toList(),
       onChanged: (String? newValue) {

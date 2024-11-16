@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_ticket/Pages/User_M/cards/customDropDownMenu.dart';
-import 'package:project_ticket/Pages/User_M/cards/timePicker.dart';
 
-import 'cards/datePicker.dart';
 
 class eventListingPage extends StatefulWidget {
   const eventListingPage({super.key});
@@ -52,6 +50,35 @@ class _eventListingPageState extends State<eventListingPage> {
         ),
       ),
     );
+  }
+
+  DateTime presentYear =DateTime(DateTime.now().year);
+  DateTime futureYear =DateTime(DateTime.now().year);
+
+  DateTime date =DateTime(2024,11,27);
+  Future<void> datePicker() async {
+    DateTime? selectDate = await showDatePicker(
+        context: context,
+        initialDate: date,
+        firstDate: presentYear,
+        lastDate: presentYear.add(Duration())
+    );
+    if(selectDate == null) return;
+    setState(() =>date=selectDate);
+  }
+
+
+  TimeOfDay _time = TimeOfDay.now();
+  late TimeOfDay picked;
+
+  Future<Null> selectTime() async {
+    picked = (await showTimePicker(
+      context: context,
+      initialTime: _time,
+    ))!;
+    setState(() {
+      _time = picked;
+    });
   }
 
   Widget hSpace(){
@@ -108,16 +135,16 @@ Widget wSpace(){
               children: [
                 _text("Event Date :"),
                 wSpace(),
-                _text("20 / 11 / 2024"),
-                datePickerCard()
+                _text("${date.day} / ${date.month} / ${date.year}"),
+                IconButton(onPressed: () {datePicker();  }, icon: const Icon(Icons.date_range),)
               ],
             ),
              Row(
               children: [
                 _text("Event Time :"),
                 wSpace(),
-                _text("4 :40 PM"),
-                timePicker()
+                _text("${_time.hour} : ${_time.minute} ${_time.hour < 12 ? 'AM' : 'PM'}"),
+                IconButton(onPressed: () {selectTime();  }, icon: const Icon(Icons.date_range),)
               ],
             ),
             hSpace(),
@@ -130,24 +157,7 @@ Widget wSpace(){
             _buildInfoField("Event Seats Availability", "Any Seats Limitation",
                 1, _eventSeatsAvailibility),
 
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.center,
-            //   children: [
-            //     customDropdownMenu(
-            //         defaultValue: dropdownValue,
-            //         listData: eventModeType,
-            //         onChanged: (String newValue) {}),
-            //     customDropdownMenu(
-            //         defaultValue: "Cultural",
-            //         listData: eventType,
-            //         onChanged: (String newValue) {}),
-            //   ],
-            // ),
-
-            // const timePicker(),
-            // const datePickerCard(),
-
-            SizedBox(height: 100,),
+            const SizedBox(height: 100,),
 
             SizedBox(
                 width: 200,
