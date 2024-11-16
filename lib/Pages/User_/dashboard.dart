@@ -87,7 +87,6 @@ class _dashboardState extends State<dashboard> {
                     testcard(),
                     testcard(),
                     testcard(),
-                    testcard(),
                   ]),
             ),
             Padding(
@@ -96,65 +95,49 @@ class _dashboardState extends State<dashboard> {
                   alignment: Alignment.centerLeft,
                   child: _textHeading("Event Catalog")),
             ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    const eventCatalog(),
-                    _spacer,
-                    const eventCatalog(),
-                    _spacer,
-                    const eventCatalog(),
-                    _spacer,
-                    const eventCatalog(),
-                    _spacer,
-                  ],
-                ),
-              ),
+
+            SizedBox(
+              height: 60,
+              child: ListView(
+                  // shrinkWrap: true,
+                  scrollDirection:Axis.horizontal,
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  children: const [
+                    eventCatalog(),
+                    eventCatalog(),
+                    eventCatalog(),
+                    eventCatalog(),
+                    eventCatalog(),
+                    eventCatalog(),
+                    eventCatalog(),
+                  ]),
             ),
+
+            // Padding(
+            //   padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
+            //   child: SingleChildScrollView(
+            //     scrollDirection: Axis.horizontal,
+            //     child: Row(
+            //       children: [
+            //         const eventCatalog(),
+            //         _spacer,
+            //         const eventCatalog(),
+            //         _spacer,
+            //         const eventCatalog(),
+            //         _spacer,
+            //         const eventCatalog(),
+            //         _spacer,
+            //       ],
+            //     ),
+            //   ),
+            // ),
+
             Padding(
               padding: const EdgeInsets.fromLTRB(15, 5, 15, 0),
               child: Align(
                   alignment: Alignment.centerLeft,
                   child: _textHeading("Explore")),
             ),
-
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(15, 5, 10, 0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    OutlinedButton(
-                        onPressed: () {}, child: const Text("Cultural")),
-                    _spacer,
-                    OutlinedButton(
-                        onPressed: () {}, child: const Text("Hackathon")),
-                    _spacer,
-                    OutlinedButton(
-                        onPressed: () {}, child: const Text("Seminar")),
-                    _spacer,
-                    OutlinedButton(
-                        onPressed: () {}, child: const Text("Workshop")),
-                    _spacer,
-                    OutlinedButton(
-                        onPressed: () {}, child: const Text("Tournament")),
-                    _spacer,
-                    OutlinedButton(
-                        onPressed: () {}, child: const Text("Conference")),
-                    _spacer,
-                    OutlinedButton(
-                        onPressed: () {}, child: const Text("Expo")),
-                    _spacer,
-
-                  ],
-                ),
-              ),
-            ),
-
 
             Padding(
               padding: const EdgeInsets.fromLTRB(15, 5, 15, 0),

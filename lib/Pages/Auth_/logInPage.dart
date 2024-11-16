@@ -34,7 +34,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
         email: _emailController.text,
         password: _passwordController.text,
       );
-    } on FirebaseAuthException catch (e) {
+    } on FirebaseAuthException {
       setState(() {
       });
     }

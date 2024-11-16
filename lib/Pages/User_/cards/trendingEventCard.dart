@@ -15,11 +15,6 @@ class testcard extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(20)),
               image: DecorationImage(image:AssetImage("assets/splashScreen.jpeg"),fit: BoxFit.fill)
             ),
-            // width: 300,
-            // child: Image.asset(
-            //   "assets/splashScreen.jpeg",
-            //   fit: BoxFit.cover,
-            // ),
           ),
           const Positioned(
             left: 10,

@@ -5,16 +5,31 @@ class eventCatalog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(width: 200,height: 60,
-        decoration: BoxDecoration(
-            color: Colors.white,
-            border: Border.all(
-                color: Colors.grey, width: 1.0, style: BorderStyle.solid),
-            borderRadius: BorderRadius.circular(10),boxShadow: const [BoxShadow(color: Colors.black45,offset: Offset(5, 5),blurRadius: 5)]),
-        child: const Column(
+    return Padding(
+      padding: const EdgeInsets.only(left: 10),
+      child: Card(
+        elevation: 2,
+        child: Stack(
           children: [
-            Text("Widget Here"),
+            Container(
+              width: 200,
+              height: 60,
+              decoration: const BoxDecoration(
+                  color: Colors.orangeAccent,
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  image: DecorationImage(image:AssetImage("assets/Hackathon.png"),fit: BoxFit.cover)
+              ),
+            ),
+            const Align(
+              alignment: Alignment.center,
+              child: Text(
+                "Hackathon",
+                style: TextStyle(fontSize: 20, color: Colors.white),
+              ),
+            ),
           ],
-        ));
+        ),
+      ),
+    );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:icons_plus/icons_plus.dart';
 import 'package:project_ticket/Pages/User_M/eventLisingPage.dart';
 import 'package:project_ticket/Pages/User_M/mDashboard.dart';
 import 'package:project_ticket/Pages/User_M/myEvent.dart';
@@ -81,7 +82,7 @@ class _mHomePageState extends State<mHomePage> {
         floatingActionButton: FloatingActionButton.extended(
             splashColor: Colors.greenAccent,
             label: const Text("Host Event"),
-            icon: const Icon(Icons.event),
+            icon: const Icon(Bootstrap.calendar2_event),
             onPressed: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) => const eventListingPage()));
             }),

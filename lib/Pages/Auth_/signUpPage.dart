@@ -43,7 +43,7 @@ class _SignupWidgetState extends State<SignupWidget> {
     try {
       await Auth().createUserWithEmailAndPassword(
           email: _emailController.text, password: _passwordController.text);
-    } on FirebaseException catch (e) {
+    } on FirebaseException {
       setState(() {
       });
     }

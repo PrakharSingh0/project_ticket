@@ -14,7 +14,7 @@ class eventDetailPage extends StatelessWidget {
             child: Hero(tag: "event",
                 child: Image.asset("assets/splashScreen.jpeg",fit: BoxFit.cover,)),
           ),
-          Text("asdasd")
+          const Text("asdasd")
         ],
       ),
     );

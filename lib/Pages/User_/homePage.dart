@@ -37,39 +37,6 @@ class _homePageState extends State<homePage> {
     );
   }
 
-
-  // void _showLogoutConfirmation(BuildContext context) {
-  //   showDialog(
-  //     context: context,
-  //     builder: (context) => AlertDialog(
-  //       title: const Text('Confirm Logout'),
-  //       content: const Text('Are you sure you want to log out?'),
-  //       actions: [
-  //         TextButton(
-  //           onPressed: () => Navigator.pop(context),
-  //           child: const Text('Cancel'),
-  //         ),
-  //         TextButton(
-  //           onPressed: () {
-  //             // Add logout functionality here
-  //             Auth().signOut();
-  //             Navigator.pushReplacement(
-  //                 context,
-  //                 MaterialPageRoute(
-  //                     builder: (context) =>
-  //                     const welcome_page()));
-  //             ScaffoldMessenger.of(context).showSnackBar(
-  //               const SnackBar(content: Text('Logged out successfully')),
-  //             );
-  //           },
-  //           child: const Text('Logout'),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
-
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
