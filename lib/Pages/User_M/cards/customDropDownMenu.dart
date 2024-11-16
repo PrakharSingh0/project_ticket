@@ -35,11 +35,11 @@ class _customDropdownMenuState extends State<customDropdownMenu> {
         return DropdownMenuItem<String>(
           value: value,
           child: SizedBox(
-              width: 150,
-              child: Text(
+              width: 120,
+              child: Text(textAlign: TextAlign.center,
                 value,
                 style: const TextStyle(
-                    fontSize: 18, fontWeight: FontWeight.normal),
+                    fontSize: 18, fontWeight: FontWeight.normal,),
               )),
         );
       }).toList(),

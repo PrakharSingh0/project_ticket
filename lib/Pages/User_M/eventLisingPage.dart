@@ -34,9 +34,8 @@ class _eventListingPageState extends State<eventListingPage> {
     "Tournament",
   ];
 
-
-
-  Widget _buildInfoField(String label,String hintText,int height, TextEditingController controller) {
+  Widget _buildInfoField(String label, String hintText, int height,
+      TextEditingController controller) {
     return SizedBox(
       child: TextField(
         minLines: 1,
@@ -47,12 +46,23 @@ class _eventListingPageState extends State<eventListingPage> {
           labelStyle: const TextStyle(fontWeight: FontWeight.bold),
           hintText: hintText,
           hintStyle: const TextStyle(fontWeight: FontWeight.normal),
-          // border: const OutlineInputBorder(),
+          border: const OutlineInputBorder(),
           contentPadding:
               const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
         ),
       ),
     );
+  }
+
+  Widget hSpace(){
+    return const SizedBox(height: 10,);
+}
+Widget wSpace(){
+    return const SizedBox(width: 10,);
+}
+
+  Widget _text(String text){
+    return Text(text,style: TextStyle(fontSize: 16),);
   }
 
   @override
@@ -64,58 +74,91 @@ class _eventListingPageState extends State<eventListingPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),
-        child: ListView(children: [
-          _buildInfoField("Event Name", "Enter Event Name",1,_eventName),
-          const SizedBox(
-            height: 10,
-          ),
-          // _buildInfoField("Event Type", _eventType),
-          const SizedBox(
-            height: 10
-          ),
-          _buildInfoField("Event Description", "Tell us About Your Event",10,_eventDescription),
-          const SizedBox(
-            height: 10,
-          ),
-          // _buildInfoField("Event Date", _eventDate),
-          const SizedBox(
-            height: 10,
-          ),
-          _buildInfoField("Event Vanue","Specify Event Vanue Location",1,_eventVanue),
-          const SizedBox(
-            height: 10,
-          ),
-          // _buildInfoField("Event Mode", _eventMode),
-          // const SizedBox(
-          //   height: 15,
-          // ),
-          _buildInfoField("Event Seats Availability","Any Seats Limitation",1,_eventSeatsAvailibility),
+        child: SingleChildScrollView(
+          child: Column(children: [
 
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              customDropdownMenu(
-                  defaultValue: dropdownValue,
-                  listData: eventModeType,
-                  onChanged: (String newValue) {}),
+            _buildInfoField("Event Name", "Enter Event Name", 1, _eventName),
+            hSpace(),
+            _buildInfoField("Event Description", "Tell us About Your Event", 10,
+                _eventDescription),
+            hSpace(),
+            Row(
+              children: [
+                _text("Event Type :"),
+                wSpace(),
+                customDropdownMenu(
+                    defaultValue: "Cultural",
+                    listData: eventType,
+                    onChanged: (String newValue) {}),
+              ],
+            ),
 
-              customDropdownMenu(
-                  defaultValue: "Cultural",
-                  listData: eventType,
-                  onChanged: (String newValue) {}),
+            Row(
+              children: [
+                _text("Event Mode :"),
+                wSpace(),
+                customDropdownMenu(
+                    defaultValue: dropdownValue,
+                    listData: eventModeType,
+                    onChanged: (String newValue) {}),
+              ],
+            ),
 
+            Row(
+              children: [
+                _text("Event Date :"),
+                wSpace(),
+                _text("20 / 11 / 2024"),
+                datePickerCard()
+              ],
+            ),
+             Row(
+              children: [
+                _text("Event Time :"),
+                wSpace(),
+                _text("4 :40 PM"),
+                timePicker()
+              ],
+            ),
+            hSpace(),
 
-            ],
-          ),
+            _buildInfoField(
+                "Event Vanue", "Specify Event Vanue Location", 1, _eventVanue),
 
-          const timePicker(),
-          const datePickerCard(),
+            hSpace(),
 
-          SizedBox(
-              width: 200,
-              child: ElevatedButton(
-                  onPressed: () {}, child: const Text("Host Your Event")))
-        ]),
+            _buildInfoField("Event Seats Availability", "Any Seats Limitation",
+                1, _eventSeatsAvailibility),
+
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.center,
+            //   children: [
+            //     customDropdownMenu(
+            //         defaultValue: dropdownValue,
+            //         listData: eventModeType,
+            //         onChanged: (String newValue) {}),
+            //     customDropdownMenu(
+            //         defaultValue: "Cultural",
+            //         listData: eventType,
+            //         onChanged: (String newValue) {}),
+            //   ],
+            // ),
+
+            // const timePicker(),
+            // const datePickerCard(),
+
+            SizedBox(height: 100,),
+
+            SizedBox(
+                width: 200,
+                child: ElevatedButton(
+                    onPressed: () {},
+                    child: const Text(
+                      "Host Your Event",
+                      style: TextStyle(fontSize: 16),
+                    )))
+          ]),
+        ),
       ),
     );
   }
