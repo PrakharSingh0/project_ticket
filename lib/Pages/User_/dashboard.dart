@@ -120,6 +120,42 @@ class _dashboardState extends State<dashboard> {
                   alignment: Alignment.centerLeft,
                   child: _textHeading("Explore")),
             ),
+
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Padding(
+                padding: const EdgeInsetsDirectional.fromSTEB(15, 5, 10, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    OutlinedButton(
+                        onPressed: () {}, child: const Text("Cultural")),
+                    _spacer,
+                    OutlinedButton(
+                        onPressed: () {}, child: const Text("Hackathon")),
+                    _spacer,
+                    OutlinedButton(
+                        onPressed: () {}, child: const Text("Seminar")),
+                    _spacer,
+                    OutlinedButton(
+                        onPressed: () {}, child: const Text("Workshop")),
+                    _spacer,
+                    OutlinedButton(
+                        onPressed: () {}, child: const Text("Tournament")),
+                    _spacer,
+                    OutlinedButton(
+                        onPressed: () {}, child: const Text("Conference")),
+                    _spacer,
+                    OutlinedButton(
+                        onPressed: () {}, child: const Text("Expo")),
+                    _spacer,
+
+                  ],
+                ),
+              ),
+            ),
+
+
             Padding(
               padding: const EdgeInsets.fromLTRB(15, 5, 15, 0),
               child: Column(
@@ -128,7 +164,15 @@ class _dashboardState extends State<dashboard> {
                   _hspacer,
                   const eventcard(),
                   _hspacer,
-                  const eventcard()
+                  const eventcard(),
+                  _hspacer,
+                  const eventcard(),
+                  _hspacer,
+                  const eventcard(),
+                  _hspacer,
+                  const eventcard(),
+                  _hspacer,
+                  const eventcard(),
                 ],
               ),
             ),

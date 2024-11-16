@@ -5,12 +5,15 @@ class eventcard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Card(
+      elevation: 4,
+        child: Container(
       decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border.all(
-              color: Colors.grey, width: 1.0, style: BorderStyle.solid),
-          borderRadius: BorderRadius.circular(10),boxShadow: const [BoxShadow(color: Colors.black45,offset: Offset(5, 5),blurRadius: 5)]),
+        color: Colors.white,
+        border: Border.all(
+            color: Colors.grey, width: 1.0, style: BorderStyle.solid),
+        borderRadius: BorderRadius.circular(10),
+      ),
       child: Padding(
         padding: const EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
         child: Column(mainAxisSize: MainAxisSize.max, children: [
@@ -45,9 +48,17 @@ class eventcard extends StatelessWidget {
                 ],
               ),
               const Spacer(),
-              IconButton(onPressed: () {}, iconSize: 30,tooltip: "Social Media",icon: const Icon(Icons.facebook)),
+              IconButton(
+                  onPressed: () {},
+                  iconSize: 30,
+                  tooltip: "Social Media",
+                  icon: const Icon(Icons.facebook)),
               const SizedBox(width: 10),
-              IconButton(onPressed: () {}, iconSize: 30,tooltip: "Social Media",icon: const Icon(Icons.account_balance_wallet_rounded)),
+              IconButton(
+                  onPressed: () {},
+                  iconSize: 30,
+                  tooltip: "Social Media",
+                  icon: const Icon(Icons.account_balance_wallet_rounded)),
             ],
           ),
           const Divider(thickness: 1, color: Color(0xFF020202)),
@@ -64,14 +75,14 @@ class eventcard extends StatelessWidget {
               _buildButton(context, 'Online'),
               const Spacer(),
               ElevatedButton(
-                onPressed: () {
-                },
+                onPressed: () {},
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF09B467),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
                   ),
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 ),
                 child: const Text(
                   'Join Now',
@@ -85,7 +96,7 @@ class eventcard extends StatelessWidget {
           ),
         ]),
       ),
-    );
+    ));
   }
 
   Widget _buildInfoRow(BuildContext context, String text) {

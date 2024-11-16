@@ -94,7 +94,7 @@ class FAQPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('FAQs'),
         centerTitle: true,
-        backgroundColor: Colors.blueAccent,
+        // backgroundColor: Colors.blueAccent,
       ),
       body: Padding(
         padding: const EdgeInsets.all(12.0),
@@ -143,7 +143,7 @@ class FAQPage extends StatelessWidget {
           },
         ),
       ),
-      backgroundColor: Colors.grey[100],
+      // backgroundColor: Colors.grey[100],
     );
   }
 }

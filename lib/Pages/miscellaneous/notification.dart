@@ -34,6 +34,36 @@ class notification extends StatelessWidget {
       'We are thrilled to announce our new feature release for ticket tracking. Update the app to enjoy the latest features!',
       'date': 'Nov 1, 2024'
     },
+    {
+      'title': 'CrowdWave News',
+      'description':
+      'We are thrilled to announce our new feature release for ticket tracking. Update the app to enjoy the latest features!',
+      'date': 'Nov 1, 2024'
+    },
+    {
+      'title': 'CrowdWave News',
+      'description':
+      'We are thrilled to announce our new feature release for ticket tracking. Update the app to enjoy the latest features!',
+      'date': 'Nov 1, 2024'
+    },{
+      'title': 'CrowdWave News',
+      'description':
+      'We are thrilled to announce our new feature release for ticket tracking. Update the app to enjoy the latest features!',
+      'date': 'Nov 1, 2024'
+    },{
+      'title': 'CrowdWave News',
+      'description':
+      'We are thrilled to announce our new feature release for ticket tracking. Update the app to enjoy the latest features!',
+      'date': 'Nov 1, 2024'
+    },{
+      'title': 'CrowdWave News',
+      'description':
+      'We are thrilled to announce our new feature release for ticket tracking. Update the app to enjoy the latest features!',
+      'date': 'Nov 1, 2024'
+    },
+
+
+
   ];
 
   @override
@@ -47,7 +77,6 @@ class notification extends StatelessWidget {
           },
         ),
         title: const Text('Notifications'),
-        backgroundColor: Colors.blueAccent,
       ),
       body: Padding(
         padding: const EdgeInsets.all(12.0),
@@ -99,7 +128,7 @@ class notification extends StatelessWidget {
           },
         ),
       ),
-      backgroundColor: Colors.grey[100],
+      // backgroundColor: Colors.grey[100],
     );
   }
 }

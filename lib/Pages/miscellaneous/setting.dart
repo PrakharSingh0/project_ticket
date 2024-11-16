@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../service/firebaseAuthService.dart';
-import '../../welcome_page.dart';
+import '../../dialogBox/logOutAlertBox.dart';
 import 'helpAndSupport.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -23,36 +22,36 @@ class _SettingsPageState extends State<SettingsPage> {
     // E.g., integrating a ThemeProvider to manage the app's theme state.
   }
 
-  void _showLogoutConfirmation(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Confirm Logout'),
-        content: const Text('Are you sure you want to log out?'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              // Add logout functionality here
-              Auth().signOut();
-              Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                      const welcome_page()));
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Logged out successfully')),
-              );
-            },
-            child: const Text('Logout'),
-          ),
-        ],
-      ),
-    );
-  }
+  // void _showLogoutConfirmation(BuildContext context) {
+  //   showDialog(
+  //     context: context,
+  //     builder: (context) => AlertDialog(
+  //       title: const Text('Confirm Logout'),
+  //       content: const Text('Are you sure you want to log out?'),
+  //       actions: [
+  //         TextButton(
+  //           onPressed: () => Navigator.pop(context),
+  //           child: const Text('Cancel'),
+  //         ),
+  //         TextButton(
+  //           onPressed: () {
+  //             // Add logout functionality here
+  //             Auth().signOut();
+  //             Navigator.pushReplacement(
+  //                 context,
+  //                 MaterialPageRoute(
+  //                     builder: (context) =>
+  //                     const welcome_page()));
+  //             ScaffoldMessenger.of(context).showSnackBar(
+  //               const SnackBar(content: Text('Logged out successfully')),
+  //             );
+  //           },
+  //           child: const Text('Logout'),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -97,7 +96,7 @@ class _SettingsPageState extends State<SettingsPage> {
             title: const Text('Language'),
             onTap: () {
               // Show language selection dialog (optional)
-              _showLanguageDialog();
+              showLanguageDialog();
             },
           ),
           ListTile(
@@ -114,35 +113,37 @@ class _SettingsPageState extends State<SettingsPage> {
           ListTile(
             leading: const Icon(Icons.logout),
             title: const Text('Logout'),
-            onTap: () => _showLogoutConfirmation(context),
+            onTap: () => showLogoutConfirmation(context),
           ),
         ],
       ),
     );
   }
 
-  void _showLanguageDialog() {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Select Language'),
-        content: const Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ListTile(title: Text('English')),
-            ListTile(title: Text('Spanish')),
-            ListTile(title: Text('French')),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
-          ),
-        ],
-      ),
-    );
-  }
+//   void _showLanguageDialog() {
+//     showDialog(
+//       context: context,
+//       builder: (context) => AlertDialog(
+//         title: const Text('Select Language'),
+//         content: const Column(
+//           mainAxisSize: MainAxisSize.min,
+//           children: [
+//             ListTile(title: Text('English')),
+//             ListTile(title: Text('Spanish')),
+//             ListTile(title: Text('French')),
+//           ],
+//         ),
+//         actions: [
+//           TextButton(
+//             onPressed: () => Navigator.pop(context),
+//             child: const Text('Cancel'),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+
+
 }
 
 class AccountSettingsPage extends StatelessWidget {
