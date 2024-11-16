@@ -43,9 +43,8 @@ class _SignupWidgetState extends State<SignupWidget> {
     try {
       await Auth().createUserWithEmailAndPassword(
           email: _emailController.text, password: _passwordController.text);
-    } on FirebaseAuthException catch (e) {
+    } on FirebaseException catch (e) {
       setState(() {
-        errorMassage = e.message;
       });
     }
   }
@@ -72,7 +71,7 @@ class _SignupWidgetState extends State<SignupWidget> {
           .onError(
         (error, stackTrace) {
           _resetErrorMessage();
-          errorMassage = "Something Went Wrong ! Try Again";
+          errorMassage = error.toString().replaceAll(RegExp(r'\[.*?\]'), '');
           _emailController.clear();
           _passwordController.clear();
           setState(() {
@@ -87,6 +86,9 @@ class _SignupWidgetState extends State<SignupWidget> {
           setState(() {
             isLoading = false;
           });
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Account Created successfully')),
+          );
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => const homePage()));
         });

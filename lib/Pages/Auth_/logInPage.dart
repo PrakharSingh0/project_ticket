@@ -36,7 +36,6 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
       );
     } on FirebaseAuthException catch (e) {
       setState(() {
-        errorMassage = e.message;
       });
     }
   }
@@ -48,7 +47,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
 
     if (_emailController.text == "" || _passwordController.text == "") {
       Timer(Duration(milliseconds: delayTime), () {
-        errorMassage = "Both Email & Password Required";
+        errorMassage = "Email & Password Required";
         _emailController.clear();
         _passwordController.clear();
         setState(() {
@@ -62,7 +61,7 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
           .onError(
         (error, stackTrace) {
           _resetErrorMessage();
-          errorMassage = "Incorrect Credentials";
+          errorMassage = error.toString().replaceAll(RegExp(r'\[.*?\]'), '');
           _emailController.clear();
           _passwordController.clear();
           setState(() {
@@ -77,6 +76,9 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
           setState(() {
             isLoading = false;
           });
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Logged In successfully')),
+          );
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => const homePage()));
         });
