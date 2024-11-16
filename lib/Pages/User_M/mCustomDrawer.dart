@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:project_ticket/Pages/User_/homePage.dart';
 import 'package:project_ticket/Pages/miscellaneous/profilePage.dart';
 import 'package:project_ticket/Pages/miscellaneous/helpAndSupport.dart';
-import '../../dialogBox/logOutAlertBox.dart';
 import '../../service/firebaseAuthService.dart';
+import '../dialogBox/logOutAlertBox.dart';
 import '../miscellaneous/notification.dart';
 import '../miscellaneous/setting.dart';
 

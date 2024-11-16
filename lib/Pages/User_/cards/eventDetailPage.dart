@@ -12,7 +12,7 @@ class eventDetailPage extends StatelessWidget {
           SizedBox(
             height: 300,
             child: Hero(tag: "event",
-            child: Image.asset("assets/splashScreen.jpeg",fit: BoxFit.cover,)),
+                child: Image.asset("assets/splashScreen.jpeg",fit: BoxFit.cover,)),
           ),
           Text("asdasd")
         ],

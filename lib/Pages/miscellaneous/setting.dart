@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../dialogBox/logOutAlertBox.dart';
+import '../dialogBox/logOutAlertBox.dart';
 import 'helpAndSupport.dart';
 
 class SettingsPage extends StatefulWidget {

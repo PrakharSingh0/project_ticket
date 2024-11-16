@@ -4,8 +4,8 @@ import 'package:project_ticket/Pages/User_/dashboard.dart';
 import 'package:project_ticket/Pages/User_/customDrawer.dart';
 import 'package:project_ticket/Pages/User_/myTicket.dart';
 import 'package:project_ticket/service/firebaseAuthService.dart';
-import 'package:project_ticket/dialogBox/logOutAlertBox.dart';
 
+import '../dialogBox/logOutAlertBox.dart';
 import '../miscellaneous/profilePage.dart';
 
 class homePage extends StatefulWidget {
