@@ -29,9 +29,9 @@ class _datePickerCardState extends State<datePickerCard>
 
   @pragma('vm:entry-point')
   static Route<DateTime> _datePickerRoute(
-    BuildContext context,
-    Object? arguments,
-  ) {
+      BuildContext context,
+      Object? arguments,
+      ) {
     return DialogRoute<DateTime>(
       context: context,
       builder: (BuildContext context) {
@@ -39,8 +39,8 @@ class _datePickerCardState extends State<datePickerCard>
           restorationId: 'date_picker_dialog',
           initialEntryMode: DatePickerEntryMode.calendarOnly,
           initialDate: DateTime.fromMillisecondsSinceEpoch(arguments! as int),
-          firstDate: DateTime(2021),
-          lastDate: DateTime(2022),
+          firstDate: DateTime(2024),
+          lastDate: DateTime(2025), // Changed to 2025 or later
         );
       },
     );
@@ -68,11 +68,11 @@ class _datePickerCardState extends State<datePickerCard>
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: OutlinedButton(
+      child: IconButton(
         onPressed: () {
           _restorableDatePickerRouteFuture.present();
         },
-        child: const Text('Open Date Picker'),
+        icon: const Icon(Icons.date_range),
       ),
     );
   }

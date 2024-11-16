@@ -14,10 +14,10 @@ class eventcard extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
         child: Column(mainAxisSize: MainAxisSize.max, children: [
-          const Row(
+          Row(
             mainAxisSize: MainAxisSize.max,
             children: [
-              Column(
+              const Column(
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Align(
@@ -44,18 +44,10 @@ class eventcard extends StatelessWidget {
                   ),
                 ],
               ),
-              Spacer(),
-              CircleAvatar(
-                radius: 25,
-                backgroundImage:
-                    NetworkImage('https://picsum.photos/seed/343/600'),
-              ),
-              SizedBox(width: 10),
-              CircleAvatar(
-                radius: 25,
-                backgroundImage:
-                    NetworkImage('https://picsum.photos/seed/343/600'),
-              ),
+              const Spacer(),
+              IconButton(onPressed: () {}, iconSize: 30,tooltip: "Social Media",icon: const Icon(Icons.facebook)),
+              const SizedBox(width: 10),
+              IconButton(onPressed: () {}, iconSize: 30,tooltip: "Social Media",icon: const Icon(Icons.account_balance_wallet_rounded)),
             ],
           ),
           const Divider(thickness: 1, color: Color(0xFF020202)),

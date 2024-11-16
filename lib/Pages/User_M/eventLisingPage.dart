@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_ticket/Pages/User_M/cards/customDropDownMenu.dart';
 import 'package:project_ticket/Pages/User_M/cards/timePicker.dart';
 
 import 'cards/datePicker.dart';
@@ -8,17 +9,6 @@ class eventListingPage extends StatefulWidget {
 
   @override
   State<eventListingPage> createState() => _eventListingPageState();
-}
-
-Widget _buildInfoField(String label, TextEditingController controller) {
-  return TextField(
-    controller: controller,
-    decoration: InputDecoration(
-      labelText: label,
-      // border: const OutlineInputBorder(),
-      contentPadding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
-    ),
-  );
 }
 
 class _eventListingPageState extends State<eventListingPage> {
@@ -31,7 +21,20 @@ class _eventListingPageState extends State<eventListingPage> {
   final TextEditingController _eventSeatsAvailibility = TextEditingController();
 
   List<String> eventModeType = ["Online", "Offline"];
-  String dropDownEventType = "Online";
+  String dropdownValue = "Online";
+
+  Widget _buildInfoField(String label, TextEditingController controller) {
+    return TextField(
+      controller: controller,
+      decoration: InputDecoration(
+        labelText: label,
+        // border: const OutlineInputBorder(),
+        contentPadding:
+            const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+      ),
+    );
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -63,35 +66,28 @@ class _eventListingPageState extends State<eventListingPage> {
           const SizedBox(
             height: 15,
           ),
-          _buildInfoField("Event Mode", _eventMode),
-          const SizedBox(
-            height: 15,
-          ),
+          // _buildInfoField("Event Mode", _eventMode),
+          // const SizedBox(
+          //   height: 15,
+          // ),
           _buildInfoField("Event Seats Availability", _eventSeatsAvailibility),
-          DropdownButton(
-            // Initial Value
-            value: dropDownEventType,
 
-            // Down Arrow Icon
-            icon: const Icon(Icons.keyboard_arrow_down),
+          customDropdownMenu(
+              defaultValue: dropdownValue,
+              listData: eventModeType,
+              onChanged: (String newValue) {}),
+          customDropdownMenu(
+              defaultValue: "dogi",
+              listData: ["dogi", "caf", "Wef"],
+              onChanged: (String newValue) {}),
 
-            // Array list of items
-            items: eventModeType.map((String items) {
-              return DropdownMenuItem(
-                value: items,
-                child: Text(items),
-              );
-            }).toList(),
-            // After selecting the desired option,it will
-            // change button value to selected value
-            onChanged: (String? newValue) {
-              setState(() {
-                dropDownEventType = newValue!;
-              });
-            },
-          ),
           const timePicker(),
           const datePickerCard(),
+
+          SizedBox(
+              width: 200,
+              child: ElevatedButton(
+                  onPressed: () {}, child: const Text("Host Your Event")))
         ]),
       ),
     );
