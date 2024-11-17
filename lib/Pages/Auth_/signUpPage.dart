@@ -112,7 +112,7 @@ class _SignupWidgetState extends State<SignupWidget> {
           height: MediaQuery.of(context).size.height,
           decoration: const BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage("assets/splashScreen.jpeg"),
+                  image: AssetImage("assets/back.jpg"),
                   fit: BoxFit.fitHeight)),
           child: Padding(
             padding: const EdgeInsets.all(24.0),

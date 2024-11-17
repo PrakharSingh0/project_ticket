@@ -16,7 +16,7 @@ class welcome_page extends StatelessWidget {
           height: MediaQuery.sizeOf(context).height * 1,
           decoration: const BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage("assets/splashScreen.jpeg"),
+                  image: AssetImage("assets/back.jpg"),
                   fit: BoxFit.fitHeight)
               // gradient: LinearGradient(
               //     colors: [Colors.lightBlue, Colors.lightGreenAccent],
