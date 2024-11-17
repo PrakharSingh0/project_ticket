@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:project_ticket/Pages/User_/eventcard.dart';
+import 'package:project_ticket/Pages/User_/cards/eventcard.dart';
 
-class event extends StatelessWidget {
-  const event({super.key});
+class mDashBoard extends StatelessWidget {
+  const mDashBoard({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,6 +13,6 @@ class event extends StatelessWidget {
           eventcard(),eventcard(),eventcard(),eventcard(),eventcard(),
         ],
       ),
-    ),);
+      ),);
   }
 }

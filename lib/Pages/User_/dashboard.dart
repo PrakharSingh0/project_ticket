@@ -1,103 +1,165 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:project_ticket/Pages/User_/Event.dart';
-import 'package:project_ticket/Pages/User_/customDrawer.dart';
-import 'package:project_ticket/Pages/User_/my_ticket.dart';
-import 'package:project_ticket/Pages/User_/user_profile.dart';
-import 'package:project_ticket/service/firebaseAuthService.dart';
-import 'package:project_ticket/welcome_page.dart';
+import 'package:project_ticket/Pages/User_/cards/eventDetailPage.dart';
+import 'package:project_ticket/Pages/User_/cards/eventcard.dart';
 
-class dasboard extends StatefulWidget {
-  const dasboard({super.key});
+import 'cards/eventCatalogCard.dart';
+import 'cards/trendingEventCard.dart';
+
+class dashboard extends StatefulWidget {
+  const dashboard({super.key});
 
   @override
-  State<dasboard> createState() => _dasboardState();
+  State<dashboard> createState() => _dashboardState();
 }
 
-class _dasboardState extends State<dasboard> {
-  int _selectedIndex = 0;
-  final User? user = Auth().currentUser;
-  Widget _userId() {
-    return Text(user?.email ?? 'UID');
-  }
+class _dashboardState extends State<dashboard> {
+  final Widget _spacer = const SizedBox(
+    width: 10,
+  );
 
-  final String? email = Auth().currentUser?.email;
-  final String? username = Auth().currentUser?.displayName;
+  final Widget _hspacer = const SizedBox(
+    height: 15,
+  );
 
-  final pages = [
-    const event(),
-    const myticket(),
-    const userProfile(),
-  ];
-
-  void _onItemTapped(int index) {
-    setState(
-      () {
-        _selectedIndex = index;
-      },
+  Text _textHeading(data) {
+    return Text(
+      data,
+      textAlign: TextAlign.left,
+      style: const TextStyle(
+        fontSize: 20,
+      ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        drawer: customDrawer(),
-        appBar: AppBar(
-          elevation: 5,
-          actions: [
-            IconButton(
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) => AlertDialog(
-                      title: const Text("Account"),
-                      content: Text(
-                        "User Name : $username \n"
-                        "User Email : $email ",
-                      ),
-                      actions: <Widget>[
-                        TextButton(
-                          onPressed: () {
-                            Auth().signOut();
-                            if (User != null) {
-                              print("user logged in");
-                              Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const welcome_page()));
-                            }
-                          },
-                          child: const Text("Sign Out"),
-                        )
-                      ],
-                    ),
-                  );
-                },
-                icon: const Icon(Icons.account_circle))
+    return Padding(
+      padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Padding(
+                padding: const EdgeInsetsDirectional.fromSTEB(10, 5, 10, 0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    OutlinedButton(
+                        onPressed: () {}, child: const Text("Trending Event")),
+                    _spacer,
+                    OutlinedButton(
+                        onPressed: () {}, child: const Text("Upcoming Event")),
+                    _spacer,
+                    OutlinedButton(
+                        onPressed: () {}, child: const Text("Past Event")),
+                    _spacer,
+                  ],
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(15, 5, 15, 0),
+              child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: _textHeading("Trending Event")),
+            ),
+            SizedBox(
+              height: 300,
+              child: CarouselView(
+                  itemExtent: 300,
+                  shrinkExtent: 150,
+                  padding: const EdgeInsets.all(10),
+                  itemSnapping: true,
+                  onTap: (value) {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const eventDetailPage()));
+                  },
+                  children: const [
+                    testcard(),
+                    testcard(),
+                    testcard(),
+                    testcard(),
+                    testcard(),
+                    testcard(),
+                    testcard(),
+                    testcard(),
+                    testcard(),
+                  ]),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(15, 5, 15, 0),
+              child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: _textHeading("Event Catalog")),
+            ),
+
+            SizedBox(
+              height: 60,
+              child: ListView(
+                  // shrinkWrap: true,
+                  scrollDirection:Axis.horizontal,
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  children: const [
+                    eventCatalog(),
+                    eventCatalog(),
+                    eventCatalog(),
+                    eventCatalog(),
+                    eventCatalog(),
+                    eventCatalog(),
+                    eventCatalog(),
+                  ]),
+            ),
+
+            // Padding(
+            //   padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
+            //   child: SingleChildScrollView(
+            //     scrollDirection: Axis.horizontal,
+            //     child: Row(
+            //       children: [
+            //         const eventCatalog(),
+            //         _spacer,
+            //         const eventCatalog(),
+            //         _spacer,
+            //         const eventCatalog(),
+            //         _spacer,
+            //         const eventCatalog(),
+            //         _spacer,
+            //       ],
+            //     ),
+            //   ),
+            // ),
+
+            Padding(
+              padding: const EdgeInsets.fromLTRB(15, 5, 15, 0),
+              child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: _textHeading("Explore")),
+            ),
+
+            Padding(
+              padding: const EdgeInsets.fromLTRB(15, 5, 15, 0),
+              child: Column(
+                children: [
+                  const eventcard(),
+                  _hspacer,
+                  const eventcard(),
+                  _hspacer,
+                  const eventcard(),
+                  _hspacer,
+                  const eventcard(),
+                  _hspacer,
+                  const eventcard(),
+                  _hspacer,
+                  const eventcard(),
+                  _hspacer,
+                  const eventcard(),
+                ],
+              ),
+            ),
           ],
-          title: const Text("Dashboard"),
-        ),
-        body: pages[_selectedIndex],
-        bottomNavigationBar: BottomNavigationBar(
-          elevation: 5,
-          selectedFontSize: 15,
-          items: const [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: "Dashboard"),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.qr_code_scanner), label: "My Ticket"),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.account_circle), label: "User Profile"),
-          ],
-          currentIndex: _selectedIndex,
-          onTap: (index) {
-            _onItemTapped(index);
-          },
-          type: BottomNavigationBarType.shifting,
-          selectedItemColor: Colors.blue,
-          unselectedItemColor: Colors.grey,
         ),
       ),
     );
