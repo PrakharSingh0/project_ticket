@@ -5,7 +5,6 @@ import 'package:icons_plus/icons_plus.dart';
 import 'package:project_ticket/Pages/User_M/mHomePage.dart';
 
 import '../../models/eventDetailsModel.dart';
-import 'cards/customDropDownMenu.dart';
 
 class eventListingPage extends StatefulWidget {
   const eventListingPage({super.key});
@@ -24,8 +23,8 @@ class _eventListingPageState extends State<eventListingPage> {
 
   List<String> eventModeType = ["Online", "Offline"];
   String dropdownValue = "Online";
-  String eventModeNewValue = "";
-  String eventTypeNewValue = "";
+  String eventModeNewValue = "Online";
+  String eventTypeNewValue = "Cultural";
 
   List<String> eventType = [
     "Cultural",
@@ -52,7 +51,7 @@ class _eventListingPageState extends State<eventListingPage> {
           hintStyle: const TextStyle(fontWeight: FontWeight.normal),
           border: const OutlineInputBorder(),
           contentPadding:
-              const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+          const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
         ),
       ),
     );
@@ -74,7 +73,7 @@ class _eventListingPageState extends State<eventListingPage> {
   TimeOfDay _time = TimeOfDay.now();
   late TimeOfDay picked;
 
-  Future<Null> selectTime() async {
+  Future<void> selectTime() async {
     picked = (await showTimePicker(
       context: context,
       initialTime: _time,
@@ -103,6 +102,32 @@ class _eventListingPageState extends State<eventListingPage> {
     );
   }
 
+  Widget _buildDropdown({
+    required String label,
+    required String defaultValue,
+    required List<String> items,
+    required ValueChanged<String> onChanged,
+  }) {
+    return Row(
+      children: [
+        _text("$label :"),
+        wSpace(),
+        DropdownButton<String>(
+          value: defaultValue,
+          onChanged: (value) {
+            onChanged(value!);
+          },
+          items: items
+              .map((item) => DropdownMenuItem<String>(
+            value: item,
+            child: Text(item),
+          ))
+              .toList(),
+        ),
+      ],
+    );
+  }
+
   Future<void> writeFireStore() async {
     final db = FirebaseFirestore.instance;
 
@@ -110,7 +135,7 @@ class _eventListingPageState extends State<eventListingPage> {
       eventName: _eventName.text.trim(),
       eventDiscription: _eventDescription.text.trim(),
       eventTime:
-          "${_time.hourOfPeriod.toString().padLeft(2, '0')} : ${_time.minute.toString().padLeft(2, '0')} ${_time.period == DayPeriod.am ? 'AM' : 'PM'}",
+      "${_time.hourOfPeriod.toString().padLeft(2, '0')} : ${_time.minute.toString().padLeft(2, '0')} ${_time.period == DayPeriod.am ? 'AM' : 'PM'}",
       eventDate: '${date.day} / ${date.month} / ${date.year}',
       eventVenue: _eventVanue.text.trim(),
       eventMode: eventModeNewValue,
@@ -133,45 +158,44 @@ class _eventListingPageState extends State<eventListingPage> {
       body: Padding(
         padding: const EdgeInsets.all(10),
         child: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.all(10),
-            child: Column(children: [
+          child: Column(
+            children: [
               _buildInfoField("Event Name", "Enter Event Name", 1, _eventName),
               hSpace(),
-              _buildInfoField("Event Description", "Tell us About Your Event",
-                  10, _eventDescription),
+              _buildInfoField(
+                  "Event Description", "Tell us About Your Event", 10, _eventDescription),
               hSpace(),
-              Row(
-                children: [
-                  _text("Event Type :"),
-                  wSpace(),
-                  customDropdownMenu(
-                      defaultValue: "Cultural",
-                      listData: eventType,
-                      onChanged: (eventTypeNewValue) {}),
-                ],
+              _buildDropdown(
+                label: "Event Type",
+                defaultValue: eventTypeNewValue,
+                items: eventType,
+                onChanged: (value) {
+                  setState(() {
+                    eventTypeNewValue = value;
+                  });
+                },
               ),
-              Row(
-                children: [
-                  _text("Event Mode :"),
-                  wSpace(),
-                  customDropdownMenu(
-                      defaultValue: dropdownValue,
-                      listData: eventModeType,
-                      onChanged: (eventModeNewValue) {}),
-                ],
+              hSpace(),
+              _buildDropdown(
+                label: "Event Mode",
+                defaultValue: eventModeNewValue,
+                items: eventModeType,
+                onChanged: (value) {
+                  setState(() {
+                    eventModeNewValue = value;
+                  });
+                },
               ),
+              hSpace(),
               Row(
                 children: [
                   _text("Event Date :"),
                   wSpace(),
                   _text("${date.day} / ${date.month} / ${date.year}"),
                   IconButton(
-                    onPressed: () {
-                      datePicker();
-                    },
+                    onPressed: datePicker,
                     icon: const Icon(Clarity.date_solid),
-                  )
+                  ),
                 ],
               ),
               Row(
@@ -181,16 +205,14 @@ class _eventListingPageState extends State<eventListingPage> {
                   _text(
                       "${_time.hourOfPeriod.toString().padLeft(2, '0')} : ${_time.minute.toString().padLeft(2, '0')} ${_time.period == DayPeriod.am ? 'AM' : 'PM'}"),
                   IconButton(
-                    onPressed: () {
-                      selectTime();
-                    },
+                    onPressed: selectTime,
                     icon: const Icon(OctIcons.clock),
-                  )
+                  ),
                 ],
               ),
               hSpace(),
-              _buildInfoField("Event Vanue", "Specify Event Vanue Location", 1,
-                  _eventVanue),
+              _buildInfoField(
+                  "Event Venue", "Specify Event Venue Location", 1, _eventVanue),
               hSpace(),
               TextField(
                 keyboardType: TextInputType.number,
@@ -207,7 +229,7 @@ class _eventListingPageState extends State<eventListingPage> {
                   hintStyle: TextStyle(fontWeight: FontWeight.normal),
                   border: OutlineInputBorder(),
                   contentPadding:
-                      EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+                  EdgeInsets.symmetric(vertical: 10, horizontal: 12),
                 ),
               ),
               hSpace(),
@@ -216,53 +238,50 @@ class _eventListingPageState extends State<eventListingPage> {
               hSpace(),
               _buildInfoField(
                   "Social Link", "Event Social Page ", 1, _eventSocialPage),
-              const SizedBox(
-                height: 100,
-              ),
+              const SizedBox(height: 100),
               SizedBox(
-                  width: 200,
-                  child: ElevatedButton(
-                      onPressed: () {
-                        showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                              title: const Text("Confirm Event Hosting"),
-                              content: const Text(
-                                  "Are you Sure want to host this event.\t Provided Information are Valid and Checked."),
-                              actions: [
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.pop;
-                                  },
-                                  child: const Text('Cancel'),
-                                ),
-                                TextButton(
-                                  onPressed: () {
-                                    writeFireStore().whenComplete(
-                                          () {
-                                            Navigator.pushReplacement(
-                                              context,
-                                              MaterialPageRoute(builder: (context) => const mHomePage()),
-                                            );
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(
-                                          const SnackBar(
-                                              content: Text(
-                                                  'Event Hosted successfully')),
-                                        );
-                                      },
-                                    );
-                                  },
-                                  child: const Text('Host'),
-                                ),
-                              ],
-                            ));
-                      },
-                      child: const Text(
-                        "Host Your Event",
-                        style: TextStyle(fontSize: 16),
-                      )))
-            ]),
+                width: 200,
+                child: ElevatedButton(
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: const Text("Confirm Event Hosting"),
+                        content: const Text(
+                            "Are you sure you want to host this event? Provided information is valid and checked."),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.pop(context),
+                            child: const Text('Cancel'),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              writeFireStore().whenComplete(() {
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const mHomePage()),
+                                );
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                      content: Text(
+                                          'Event Hosted successfully')),
+                                );
+                              });
+                            },
+                            child: const Text('Host'),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                  child: const Text(
+                    "Host Your Event",
+                    style: TextStyle(fontSize: 16),
+                  ),
+                ),
+              )
+            ],
           ),
         ),
       ),
