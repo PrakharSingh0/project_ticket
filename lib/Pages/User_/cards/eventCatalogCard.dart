@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_ticket/Pages/User_/QuarriedEventCardPage.dart';
 
 class eventCatalog extends StatelessWidget {
   const eventCatalog({super.key, required this.img, required this.eventType});
@@ -10,13 +11,13 @@ class eventCatalog extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        // Navigator.push(context, MaterialPageRoute(builder: (context) => ));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => QuarriedEventCardPage(category: eventType,)));
       },
       child: Padding(
         padding: const EdgeInsets.only(left: 10),
         child: Card(
           elevation: 2,
-          child: Container(
+          child: SizedBox(
             width: 200,
             height: 60,
             child: Stack(

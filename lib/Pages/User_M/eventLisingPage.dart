@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:project_ticket/Pages/User_M/mHomePage.dart';
-
 import '../../models/eventDetailsModel.dart';
 
 class eventListingPage extends StatefulWidget {
@@ -14,6 +13,8 @@ class eventListingPage extends StatefulWidget {
 }
 
 class _eventListingPageState extends State<eventListingPage> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   final TextEditingController _eventName = TextEditingController();
   final TextEditingController _eventDescription = TextEditingController();
   final TextEditingController _eventVanue = TextEditingController();
@@ -39,27 +40,27 @@ class _eventListingPageState extends State<eventListingPage> {
   ];
 
   Widget _buildInfoField(String label, String hintText, int height,
-      TextEditingController controller) {
-    return SizedBox(
-      child: TextField(
-        minLines: 1,
-        maxLines: height,
-        controller: controller,
-        decoration: InputDecoration(
-          labelText: label,
-          labelStyle: const TextStyle(fontWeight: FontWeight.bold),
-          hintText: hintText,
-          hintStyle: const TextStyle(fontWeight: FontWeight.normal),
-          border: const OutlineInputBorder(),
-          contentPadding:
-          const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+      TextEditingController controller, String? Function(String?)? validator) {
+    return TextFormField(
+      minLines: 1,
+      maxLines: height,
+      controller: controller,
+      decoration: InputDecoration(
+        labelText: label,
+        labelStyle: const TextStyle(fontWeight: FontWeight.bold, color: Colors.black54),
+        hintText: hintText,
+        hintStyle: const TextStyle(fontWeight: FontWeight.normal, color: Colors.grey),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: const BorderSide(color: Colors.blueAccent, width: 1.5),
         ),
+        contentPadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
       ),
+      validator: validator,
     );
   }
 
   DateTime presentYear = DateTime(DateTime.now().year);
-
   DateTime date = DateTime.now();
   Future<void> datePicker() async {
     DateTime? selectDate = await showDatePicker(
@@ -73,7 +74,6 @@ class _eventListingPageState extends State<eventListingPage> {
 
   TimeOfDay _time = TimeOfDay.now();
   late TimeOfDay picked;
-
   Future<void> selectTime() async {
     picked = (await showTimePicker(
       context: context,
@@ -99,7 +99,7 @@ class _eventListingPageState extends State<eventListingPage> {
   Widget _text(String text) {
     return Text(
       text,
-      style: const TextStyle(fontSize: 16),
+      style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.grey),
     );
   }
 
@@ -124,6 +124,7 @@ class _eventListingPageState extends State<eventListingPage> {
             child: Text(item),
           ))
               .toList(),
+          icon: const Icon(Icons.arrow_drop_down, color: Colors.blueAccent),
         ),
       ],
     );
@@ -155,141 +156,231 @@ class _eventListingPageState extends State<eventListingPage> {
     return Scaffold(
       appBar: AppBar(
         leading: const BackButton(),
-        title: const Text("List Your Event"),
+        title: const Text("List Your Event", style: TextStyle(color: Colors.black87)),
+        backgroundColor:Colors.transparent,
+        elevation: 0,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(10),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
         child: SingleChildScrollView(
-          child: Column(
-            children: [
-              _buildInfoField("Event Name", "Enter Event Name", 1, _eventName),
-              hSpace(),
-              _buildInfoField(
-                  "Event Description", "Tell us About Your Event", 10, _eventDescription),
-              hSpace(),
-              _buildDropdown(
-                label: "Event Type",
-                defaultValue: eventTypeNewValue,
-                items: eventType,
-                onChanged: (value) {
-                  setState(() {
-                    eventTypeNewValue = value;
-                  });
-                },
-              ),
-              hSpace(),
-              _buildDropdown(
-                label: "Event Mode",
-                defaultValue: eventModeNewValue,
-                items: eventModeType,
-                onChanged: (value) {
-                  setState(() {
-                    eventModeNewValue = value;
-                  });
-                },
-              ),
-              hSpace(),
-              Row(
-                children: [
-                  _text("Event Date :"),
-                  wSpace(),
-                  _text("${date.day} / ${date.month} / ${date.year}"),
-                  IconButton(
-                    onPressed: datePicker,
-                    icon: const Icon(Clarity.date_solid),
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  _text("Event Time :"),
-                  wSpace(),
-                  _text(
-                      "${_time.hourOfPeriod.toString().padLeft(2, '0')} : ${_time.minute.toString().padLeft(2, '0')} ${_time.period == DayPeriod.am ? 'AM' : 'PM'}"),
-                  IconButton(
-                    onPressed: selectTime,
-                    icon: const Icon(OctIcons.clock),
-                  ),
-                ],
-              ),
-              hSpace(),
-              _buildInfoField(
-                  "Event Venue", "Specify Event Venue Location", 1, _eventVanue),
-              hSpace(),
-              TextField(
-                keyboardType: TextInputType.number,
-                inputFormatters: <TextInputFormatter>[
-                  FilteringTextInputFormatter.digitsOnly
-                ],
-                minLines: 1,
-                maxLines: 1,
-                controller: _eventSeatsAvailibility,
-                decoration: const InputDecoration(
-                  labelText: "Seats Available",
-                  labelStyle: TextStyle(fontWeight: FontWeight.bold),
-                  hintText: "Any Seats Limitation",
-                  hintStyle: TextStyle(fontWeight: FontWeight.normal),
-                  border: OutlineInputBorder(),
-                  contentPadding:
-                  EdgeInsets.symmetric(vertical: 10, horizontal: 12),
-                ),
-              ),
-              hSpace(),
-              _buildInfoField(
-                  "Event Web link", "Event's Website ", 1, _eventWebPage),
-              hSpace(),
-              _buildInfoField(
-                  "Social Link", "Event Social Page ", 1, _eventSocialPage),
-              hSpace(),
-              _buildInfoField(
-                  "Event Banner", "Link to Your Event Banner ", 1, _bannerImage),
-              const SizedBox(height: 100),
-              SizedBox(
-                width: 200,
-                child: ElevatedButton(
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) => AlertDialog(
-                        title: const Text("Confirm Event Hosting"),
-                        content: const Text(
-                            "Are you sure you want to host this event? Provided information is valid and checked."),
-                        actions: [
-                          TextButton(
-                            onPressed: () => Navigator.pop(context),
-                            child: const Text('Cancel'),
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              writeFireStore().whenComplete(() {
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => const mHomePage()),
-                                );
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                      content: Text(
-                                          'Event Hosted successfully')),
-                                );
-                              });
-                            },
-                            child: const Text('Host'),
-                          ),
-                        ],
-                      ),
-                    );
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                hSpace(),
+                _buildInfoField(
+                  "Event Name",
+                  "Enter Event Name",
+                  1,
+                  _eventName,
+                      (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Event Name is required";
+                    }
+                    return null;
                   },
-                  child: const Text(
-                    "Host Your Event",
-                    style: TextStyle(fontSize: 16),
+                ),
+                hSpace(),
+                _buildInfoField(
+                  "Event Description",
+                  "Tell us About Your Event",
+                  10,
+                  _eventDescription,
+                      (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Event Description is required";
+                    }
+                    return null;
+                  },
+                ),
+                hSpace(),
+                _buildDropdown(
+                  label: "Event Type",
+                  defaultValue: eventTypeNewValue,
+                  items: eventType,
+                  onChanged: (value) {
+                    setState(() {
+                      eventTypeNewValue = value;
+                    });
+                  },
+                ),
+                hSpace(),
+                _buildDropdown(
+                  label: "Event Mode",
+                  defaultValue: eventModeNewValue,
+                  items: eventModeType,
+                  onChanged: (value) {
+                    setState(() {
+                      eventModeNewValue = value;
+                    });
+                  },
+                ),
+                hSpace(),
+                Row(
+                  children: [
+                    const Text("Event Date :",style: TextStyle(color:Colors.grey,fontSize: 18,)),
+                    wSpace(),
+                    Text("${date.day} / ${date.month} / ${date.year}",style: const TextStyle(color:Colors.black87,fontSize: 18,)),
+                    IconButton(
+                      onPressed: datePicker,
+                      icon: const Icon(Clarity.date_solid, color: Colors.blueAccent),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    const Text("Event Time :",style: TextStyle(color:Colors.grey,fontSize: 18,)),
+                    wSpace(),
+                    Text(
+                        "${_time.hourOfPeriod.toString().padLeft(2, '0')} : ${_time.minute.toString().padLeft(2, '0')} ${_time.period == DayPeriod.am ? 'AM' : 'PM'}",style: const TextStyle(color:Colors.black87,fontSize: 18,)),
+                    IconButton(
+                      onPressed: selectTime,
+                      icon: const Icon(OctIcons.clock, color: Colors.blueAccent),
+                    ),
+                  ],
+                ),
+                hSpace(),
+                _buildInfoField(
+                  "Event Venue",
+                  "Specify Event Venue Location",
+                  1,
+                  _eventVanue,
+                      (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Event Venue is required";
+                    }
+                    return null;
+                  },
+                ),
+                hSpace(),
+                TextFormField(
+                  keyboardType: TextInputType.number,
+                  inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                  minLines: 1,
+                  maxLines: 1,
+                  controller: _eventSeatsAvailibility,
+                  decoration: InputDecoration(
+                    labelText: "Seats",
+                    labelStyle: const TextStyle(fontWeight: FontWeight.bold, color: Colors.black54),
+                    hintText: "Seats Available",
+                    hintStyle: const TextStyle(fontWeight: FontWeight.normal, color: Colors.grey),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15),
+                      borderSide: const BorderSide(color: Colors.blueAccent, width: 1.5),
+                    ),
+                    contentPadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Seats availability is required";
+                    }
+                    if (int.tryParse(value) == null) {
+                      return "Please enter a valid number";
+                    }
+                    return null;
+                  },
+                ),
+                hSpace(),
+                _buildInfoField(
+                  "Event Web link",
+                  "Event's Website ",
+                  1,
+                  _eventWebPage,
+                      (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Event Web link is required";
+                    }
+                    return null;
+                  },
+                ),
+                hSpace(),
+                _buildInfoField(
+                  "Social Link",
+                  "Event Social Page ",
+                  1,
+                  _eventSocialPage,
+                      (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Social link is required";
+                    }
+                    return null;
+                  },
+                ),
+                hSpace(),
+                _buildInfoField(
+                  "Event Banner",
+                  "Link to Your Event Banner ",
+                  1,
+                  _bannerImage,
+                      (value) {
+                    if (value == null || value.isEmpty) {
+                      return "Event Banner is required";
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 30),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: SizedBox(
+                    width: 200,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.orangeAccent,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        padding: const EdgeInsets.symmetric(vertical: 15),
+                      ),
+                      onPressed: () {
+                        if (_formKey.currentState!.validate()) {
+                          showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              title: const Text("Confirm Event Hosting"),
+                              content: const Text(
+                                  "Are you sure you want to host this event? Provided information is valid and checked."),
+                              actions: [
+                                TextButton(
+                                  onPressed: () => Navigator.pop(context),
+                                  child: const Text('Cancel'),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    writeFireStore().whenComplete(() {
+                                      Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                            const mHomePage()),
+                                      );
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        const SnackBar(
+                                            content: Text('Event Hosted successfully')),
+                                      );
+                                    });
+                                  },
+                                  child: const Text('Host'),
+                                ),
+                              ],
+                            ),
+                          );
+                        }
+                      },
+                      child: const Text(
+                        "Host Your Event",
+                        style: TextStyle(color:Colors.white,fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
+                    ),
                   ),
                 ),
-              )
-            ],
+                hSpace()
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 }
+

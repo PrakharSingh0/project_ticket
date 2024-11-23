@@ -14,11 +14,9 @@ class EventDetailPage extends StatelessWidget {
   final String eventDate;
   final String eventTime;
   final String bannerImage;
-  final Map<String, String> event;
 
   const EventDetailPage({
     super.key,
-    required this.event,
     required this.eventName,
     required this.eventDescription,
     required this.eventMode,
@@ -118,7 +116,7 @@ class EventDetailPage extends StatelessWidget {
                         const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
                     child: SingleChildScrollView(
                       child: ConstrainedBox(
-                        constraints: BoxConstraints(minHeight: 550),
+                        constraints: const BoxConstraints(minHeight: 550),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [

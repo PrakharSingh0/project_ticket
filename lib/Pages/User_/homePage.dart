@@ -16,7 +16,7 @@ class homePage extends StatefulWidget {
 
 class _homePageState extends State<homePage> {
   int _selectedIndex = 0;
-  final User? user = Auth().currentUser;
+  String? userName=FirebaseAuth.instance.currentUser?.displayName;
 
 
   final String? email = Auth().currentUser?.email;
@@ -46,13 +46,13 @@ class _homePageState extends State<homePage> {
           elevation: 5,
           actions: [
             IconButton(
-              icon: Icon(Icons.logout),
+              icon: const Icon(Icons.logout),
               onPressed: () async {
                 try {
                   await FirebaseAuth.instance.signOut();
                   // Optional: Show feedback to the user
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text("You have been logged out.")),
+                    const SnackBar(content: Text("You have been logged out.")),
                   );
                 } catch (e) {
                   ScaffoldMessenger.of(context).showSnackBar(
@@ -62,7 +62,8 @@ class _homePageState extends State<homePage> {
               },
             ),
           ],
-          title: const Text("Crowd Waves"),
+          title: Text("Hi $username"),
+
         ),
         body: pages[_selectedIndex],
         bottomNavigationBar: BottomNavigationBar(

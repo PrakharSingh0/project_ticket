@@ -18,11 +18,11 @@ Future<void> main() async {
   runApp(
     MaterialApp(
       routes: {
-        '/login': (context) => LoginPageWidget(),
-        '/signup': (context) => SignupWidget(),
+        '/login': (context) => const LoginPageWidget(),
+        '/signup': (context) => const SignupWidget(),
       },
       debugShowCheckedModeBanner: false,
-      home: AuthStateHandler(),
+      home: const AuthStateHandler(),
     ),
   ); //runApp
 }

@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class UserInformation extends StatefulWidget {
+  const UserInformation({super.key});
+
   @override
   _UserInformationState createState() => _UserInformationState();
 }

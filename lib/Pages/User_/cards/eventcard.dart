@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 
 import 'eventDetailPage.dart';
 // Import the EventDetailsPage
@@ -20,7 +19,7 @@ class EventCard extends StatefulWidget {
   final String bannerImage;
 
   const EventCard({
-    Key? key,
+    super.key,
     required this.eventName,
     required this.eventDiscription,
     required this.eventMode,
@@ -32,7 +31,7 @@ class EventCard extends StatefulWidget {
     required this.eventDate,
     required this.eventTime,
     required this.bannerImage,
-  }) : super(key: key);
+  });
 
   @override
   State<EventCard> createState() => _EventCardState();
@@ -152,7 +151,7 @@ class _EventCardState extends State<EventCard> {
                             eventSeats: widget.eventSeats,
                             eventDate: widget.eventDate,
                             eventTime: widget.eventTime,
-                            bannerImage: widget.bannerImage, event: {},
+                            bannerImage: widget.bannerImage,
                           ),
                         ),
                       );

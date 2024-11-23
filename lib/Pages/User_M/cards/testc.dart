@@ -15,7 +15,7 @@ class EventDetailsPage extends StatelessWidget {
 
   // Constructor to receive the event details
   const EventDetailsPage({
-    Key? key,
+    super.key,
     required this.eventName,
     required this.eventDiscription,
     required this.eventMode,
@@ -27,7 +27,7 @@ class EventDetailsPage extends StatelessWidget {
     required this.eventDate,
     required this.eventTime,
     required this.bannerImage,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
