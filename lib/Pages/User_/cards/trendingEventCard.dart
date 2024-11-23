@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 
-import 'eventDetailPage.dart';
-
 class testcard extends StatelessWidget {
   testcard({super.key});
 
@@ -18,13 +16,13 @@ class testcard extends StatelessWidget {
       "title": "Music Festival 2024",
       "date": "20-12-2024",
       "description": "An amazing music festival with top artists.",
-      "image": "assets/music_festival.jpg",
+      "image": "assets/Hackathon.png",
     },
     {
       "title": "Startup Expo 2024",
       "date": "12-01-2025",
       "description": "An expo showcasing the latest startups and innovations.",
-      "image": "assets/startup_expo.jpg",
+      "image": "assets/Hackathon.png",
     },
   ];
 

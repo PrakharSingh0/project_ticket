@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:icons_plus/icons_plus.dart';
 
+import 'eventDetailPage.dart';
+// Import the EventDetailsPage
+
 class EventCard extends StatefulWidget {
   final String eventName;
   final String eventDiscription;
-  final String eventMode;
+  final String eventDate;
+  final String eventTime;
   final String eventVenue;
+  final String eventMode;
   final String eventType;
   final String eventWeblink;
   final String eventSocialLink;
   final int eventSeats;
-  final String eventDate;
-  final String eventTime;
+  final String bannerImage;
 
   const EventCard({
     Key? key,
@@ -25,6 +29,7 @@ class EventCard extends StatefulWidget {
     required this.eventSeats,
     required this.eventDate,
     required this.eventTime,
+    required this.bannerImage,
   }) : super(key: key);
 
   @override
@@ -121,7 +126,25 @@ class _EventCardState extends State<EventCard> {
                   height: 40,
                   child: ElevatedButton(
                     onPressed: () {
-                      // Add enquiry functionality
+                      // Navigate to EventDetailsPage and pass the event data
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => EventDetailPage(
+                            eventName: widget.eventName,
+                            eventDescription: widget.eventDiscription,
+                            eventMode: widget.eventMode,
+                            eventVenue: widget.eventVenue,
+                            eventType: widget.eventType,
+                            eventWeblink: widget.eventWeblink,
+                            eventSocialLink: widget.eventSocialLink,
+                            eventSeats: widget.eventSeats,
+                            eventDate: widget.eventDate,
+                            eventTime: widget.eventTime,
+                            bannerImage: widget.bannerImage, event: {},
+                          ),
+                        ),
+                      );
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.greenAccent,

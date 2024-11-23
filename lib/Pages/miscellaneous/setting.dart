@@ -62,14 +62,7 @@ class _SettingsPageState extends State<SettingsPage> {
               );
             },
           ),
-          ListTile(
-            leading: const Icon(Icons.language),
-            title: const Text('Language'),
-            onTap: () {
-              // Show language selection dialog (optional)
-              showLanguageDialog();
-            },
-          ),
+
           ListTile(
             leading: const Icon(Icons.help_outline),
             title: const Text('Help & Support'),

@@ -20,6 +20,7 @@ class _eventListingPageState extends State<eventListingPage> {
   final TextEditingController _eventSeatsAvailibility = TextEditingController();
   final TextEditingController _eventWebPage = TextEditingController();
   final TextEditingController _eventSocialPage = TextEditingController();
+  final TextEditingController _bannerImage = TextEditingController();
 
   List<String> eventModeType = ["Online", "Offline"];
   String dropdownValue = "Online";
@@ -59,7 +60,7 @@ class _eventListingPageState extends State<eventListingPage> {
 
   DateTime presentYear = DateTime(DateTime.now().year);
 
-  DateTime date = DateTime(2024, 11, 27);
+  DateTime date = DateTime.now();
   Future<void> datePicker() async {
     DateTime? selectDate = await showDatePicker(
         context: context,
@@ -142,6 +143,7 @@ class _eventListingPageState extends State<eventListingPage> {
       eventType: eventTypeNewValue,
       eventWeblink: _eventWebPage.text.trim(),
       eventSocialLink: _eventSocialPage.text.trim(),
+      bannerImage: _bannerImage.text.trim(),
       eventSeats: int.parse(_eventSeatsAvailibility.text.trim()),
     );
 
@@ -238,6 +240,9 @@ class _eventListingPageState extends State<eventListingPage> {
               hSpace(),
               _buildInfoField(
                   "Social Link", "Event Social Page ", 1, _eventSocialPage),
+              hSpace(),
+              _buildInfoField(
+                  "Event Banner", "Link to Your Event Banner ", 1, _bannerImage),
               const SizedBox(height: 100),
               SizedBox(
                 width: 200,

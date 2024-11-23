@@ -5,7 +5,6 @@ import 'package:project_ticket/Pages/User_/customDrawer.dart';
 import 'package:project_ticket/Pages/User_/myTicket.dart';
 import 'package:project_ticket/service/firebaseAuthService.dart';
 
-import '../dialogBox/logOutAlertBox.dart';
 import '../miscellaneous/profilePage.dart';
 
 class homePage extends StatefulWidget {
@@ -47,29 +46,23 @@ class _homePageState extends State<homePage> {
           elevation: 5,
           actions: [
             IconButton(
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (context) => AlertDialog(
-                      title: const Text("Account"),
-                      content: Text(
-                        "User Name : $username \n"
-                        "User Email : $email ",
-                      ),
-                      actions: <Widget>[
-                        TextButton(
-                          onPressed: () {
-                            showLogoutConfirmation(context);
-                                                    },
-                          child: const Text("Sign Out"),
-                        )
-                      ],
-                    ),
+              icon: Icon(Icons.logout),
+              onPressed: () async {
+                try {
+                  await FirebaseAuth.instance.signOut();
+                  // Optional: Show feedback to the user
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text("You have been logged out.")),
                   );
-                },
-                icon: const Icon(Icons.account_circle))
+                } catch (e) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text("Logout failed: ${e.toString()}")),
+                  );
+                }
+              },
+            ),
           ],
-          title: const Text("Dashboard"),
+          title: const Text("Crowd Waves"),
         ),
         body: pages[_selectedIndex],
         bottomNavigationBar: BottomNavigationBar(

@@ -10,6 +10,7 @@ class eventDetailsModel {
   final String? eventWeblink;
   final String? eventSocialLink;
   final int? eventSeats;
+  final String? bannerImage;
 
   const eventDetailsModel({
     this.id,
@@ -23,6 +24,8 @@ class eventDetailsModel {
     required this.eventWeblink,
     required this.eventSocialLink,
     required this.eventSeats,
+    required this.bannerImage,
+
   });
 
 
@@ -38,6 +41,7 @@ class eventDetailsModel {
       "eventWebLink":eventWeblink,
       "eventSocialLink":eventSocialLink,
       "eventSeats":eventSeats,
+      "bannerImage":bannerImage,
 
     };
   }

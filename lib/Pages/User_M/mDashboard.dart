@@ -43,6 +43,7 @@ class _mDashBoardState extends State<mDashBoard> {
                   eventSeats: data['eventSeats'] ?? 0,
                   eventDate: data['eventDate'] ?? 'N/A',
                   eventTime: data['eventTime'] ?? 'N/A',
+                  bannerImage: data['bannerImage'] ?? 'N/A',
                 );
               }).toList(),
             );
