@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:icons_plus/icons_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class EventDetailPage extends StatelessWidget {
   final String eventName;
@@ -33,6 +34,12 @@ class EventDetailPage extends StatelessWidget {
 
   Widget hSpacer(double size) {
     return SizedBox(height: size);
+  }
+  Future<void> openUrl(String address) async {
+    final Uri url = Uri.parse(address);
+    if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
+      throw Exception('Could not launch $url');
+    }
   }
 
   Widget _buildDetailRow(String label, String value) {
@@ -110,80 +117,85 @@ class EventDetailPage extends StatelessWidget {
                     padding:
                         const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
                     child: SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          // Event Name
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween, // Ensures space between text and icons
-                            children: [
-                              // Event Name
-                              Expanded(
-                                child: Text(
-                                  eventName,
-                                  style: const TextStyle(
-                                    fontSize: 28,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black87,
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(minHeight: 550),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            // Event Name
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween, // Ensures space between text and icons
+                              children: [
+                                // Event Name
+                                Expanded(
+                                  child: Text(
+                                    eventName,
+                                    style: const TextStyle(
+                                      fontSize: 28,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black87,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              // Icons
-                              Row(
-                                children: [
-                                  IconButton(
-                                    onPressed: () {
-                                      // Handle link button action
-                                    },
-                                    icon: const Icon(
-                                      Bootstrap.link_45deg,
-                                      size: 30,
+                                // Icons
+                                Row(
+                                  children: [
+                                    IconButton(
+                                      onPressed: () {
+                                        openUrl(eventSocialLink);
+                                        // Handle link button action
+                                      },
+                                      icon: const Icon(
+                                        Bootstrap.link_45deg,
+                                        size: 30,
+                                      ),
                                     ),
-                                  ),
-                                  IconButton(
-                                    onPressed: () {
-                                      // Handle global button action
-                                    },
-                                    icon: const Icon(
-                                      LineAwesome.instagram,
-                                      size: 30,
+                                    IconButton(
+                                      onPressed: () {
+                                        openUrl(eventSocialLink);
+                                        // Handle global button action
+                                      },
+                                      icon: const Icon(
+                                        LineAwesome.instagram,
+                                        size: 30,
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
+                              ],
+                            ),
+                            hSpacer(0),
+                            // Event Type
+                            Text(
+                              eventType,
+                              style: const TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.orangeAccent,
                               ),
-                            ],
-                          ),
-                          hSpacer(0),
-                          // Event Type
-                          Text(
-                            eventType,
-                            style: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.orangeAccent,
                             ),
-                          ),
-                          hSpacer(20),
-                          // Event Details
-                          _buildDetailRow("Date", eventDate),
-                          _buildDetailRow("Time", eventTime),
-                          _buildDetailRow("Venue", eventVenue),
-                          _buildDetailRow("Mode", eventMode),
-                          _buildDetailRow("Available Seats", '$eventSeats' ),
-                          hSpacer(20),
-                          // Event Description
-                          Text(
-                            eventDescription,
-                            style: const TextStyle(
-                              fontSize: 16,
-                              height: 1.5,
-                              color: Colors.black87,
+                            hSpacer(20),
+                            // Event Details
+                            _buildDetailRow("Date", eventDate),
+                            _buildDetailRow("Time", eventTime),
+                            _buildDetailRow("Venue", eventVenue),
+                            _buildDetailRow("Mode", eventMode),
+                            _buildDetailRow("Available Seats", '$eventSeats' ),
+                            hSpacer(20),
+                            // Event Description
+                            Text(
+                              eventDescription,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                height: 1.5,
+                                color: Colors.black87,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),

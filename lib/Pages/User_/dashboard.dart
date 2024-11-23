@@ -186,7 +186,7 @@ class _dashboardState extends State<dashboard> {
                           eventMode: data['eventMode'] ?? 'N/A',
                           eventVenue: data['eventVenue'] ?? 'N/A',
                           eventType: data['eventType'] ?? 'N/A',
-                          eventWeblink: data['eventWeblink'] ?? '',
+                          eventWebLink: data['eventWebLink'] ?? '',
                           eventSocialLink: data['eventSocialLink'] ?? '',
                           eventSeats: data['eventSeats'] ?? 0,
                           eventDate: data['eventDate'] ?? 'N/A',

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:icons_plus/icons_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 import 'eventDetailPage.dart';
 // Import the EventDetailsPage
@@ -12,7 +14,7 @@ class EventCard extends StatefulWidget {
   final String eventVenue;
   final String eventMode;
   final String eventType;
-  final String eventWeblink;
+  final String eventWebLink;
   final String eventSocialLink;
   final int eventSeats;
   final String bannerImage;
@@ -24,7 +26,7 @@ class EventCard extends StatefulWidget {
     required this.eventMode,
     required this.eventVenue,
     required this.eventType,
-    required this.eventWeblink,
+    required this.eventWebLink,
     required this.eventSocialLink,
     required this.eventSeats,
     required this.eventDate,
@@ -35,6 +37,15 @@ class EventCard extends StatefulWidget {
   @override
   State<EventCard> createState() => _EventCardState();
 }
+
+Future<void> openUrl(String address) async {
+  final Uri url = Uri.parse(address);
+  if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
+    throw Exception('Could not launch $url');
+  }
+}
+
+
 
 class _EventCardState extends State<EventCard> {
   @override
@@ -77,15 +88,15 @@ class _EventCardState extends State<EventCard> {
                   const Spacer(),
                   IconButton(
                     onPressed: () {
-                      // Add social media link functionality
+                      openUrl(widget.eventSocialLink);
                     },
                     iconSize: 30,
                     tooltip: "Social Media",
                     icon: const Icon(LineAwesome.instagram),
                   ),
                   IconButton(
-                    onPressed: () {
-                      // Add website link functionality
+                    onPressed: () async {
+                      openUrl(widget.eventWebLink);
                     },
                     iconSize: 30,
                     tooltip: "Web Link",
@@ -136,7 +147,7 @@ class _EventCardState extends State<EventCard> {
                             eventMode: widget.eventMode,
                             eventVenue: widget.eventVenue,
                             eventType: widget.eventType,
-                            eventWeblink: widget.eventWeblink,
+                            eventWeblink: widget.eventWebLink,
                             eventSocialLink: widget.eventSocialLink,
                             eventSeats: widget.eventSeats,
                             eventDate: widget.eventDate,
