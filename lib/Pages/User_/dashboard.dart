@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:project_ticket/Pages/User_/cards/eventcard.dart';
+import 'package:project_ticket/Pages/User_/cards/eventcard.dart';  // Import the eventCard
 
 import 'cards/eventCatalogCard.dart';
 import 'cards/trendingEventCard.dart';
@@ -179,8 +179,10 @@ class _dashboardState extends State<dashboard> {
                     return Column(
                       children: eventDocs.map((doc) {
                         final data = doc.data() as Map<String, dynamic>;
+                        final eventId = doc.id; // Get the eventId from Firestore
 
                         return EventCard(
+                          eventId: eventId, // Pass eventId here
                           eventName: data['eventName'] ?? 'N/A',
                           eventDiscription: data['eventDiscription'] ?? 'N/A',
                           eventMode: data['eventMode'] ?? 'N/A',

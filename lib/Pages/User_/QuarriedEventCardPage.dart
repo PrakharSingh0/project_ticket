@@ -13,7 +13,6 @@ class QuarriedEventCardPage extends StatefulWidget {
 
 class _QuarriedEventCardPageState extends State<QuarriedEventCardPage> {
   late Stream<QuerySnapshot> _eventStream;
-  List<Map<String, dynamic>> event = [];
 
   Future<void> fetchData() async {
     _eventStream = FirebaseFirestore.instance
@@ -31,12 +30,13 @@ class _QuarriedEventCardPageState extends State<QuarriedEventCardPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('${widget.category} Event'),),
+      appBar: AppBar(
+        title: Text('${widget.category} Event'),
+      ),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(15, 5, 15, 0),
         child: StreamBuilder<QuerySnapshot>(
-          stream:
-              _eventStream, // Use the stream that will reload when the swipe down is triggered
+          stream: _eventStream, // Stream that reloads when data is fetched
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());
@@ -52,12 +52,13 @@ class _QuarriedEventCardPageState extends State<QuarriedEventCardPage> {
 
             final eventDocs = snapshot.data!.docs;
 
-            // Inside your StreamBuilder
             return Column(
               children: eventDocs.map((doc) {
                 final data = doc.data() as Map<String, dynamic>;
+                final eventId = doc.id; // Capture the eventId from Firestore
 
                 return EventCard(
+                  eventId: eventId,  // Pass eventId to EventCard
                   eventName: data['eventName'] ?? 'N/A',
                   eventDiscription: data['eventDiscription'] ?? 'N/A',
                   eventMode: data['eventMode'] ?? 'N/A',

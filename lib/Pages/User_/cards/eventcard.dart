@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import 'eventDetailPage.dart';
-// Import the EventDetailsPage
+import 'eventDetailPage.dart'; // Import the EventDetailsPage
 
 class EventCard extends StatefulWidget {
+  final String eventId; // Add eventId here
   final String eventName;
   final String eventDiscription;
   final String eventDate;
@@ -20,6 +19,7 @@ class EventCard extends StatefulWidget {
 
   const EventCard({
     super.key,
+    required this.eventId,  // Initialize eventId here
     required this.eventName,
     required this.eventDiscription,
     required this.eventMode,
@@ -43,8 +43,6 @@ Future<void> openUrl(String address) async {
     throw Exception('Could not launch $url');
   }
 }
-
-
 
 class _EventCardState extends State<EventCard> {
   @override
@@ -136,11 +134,12 @@ class _EventCardState extends State<EventCard> {
                   height: 40,
                   child: ElevatedButton(
                     onPressed: () {
-                      // Navigate to EventDetailsPage and pass the event data
+                      // Navigate to EventDetailPage and pass the event data including eventId
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => EventDetailPage(
+                            eventId: widget.eventId, // Pass eventId here
                             eventName: widget.eventName,
                             eventDescription: widget.eventDiscription,
                             eventMode: widget.eventMode,

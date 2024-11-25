@@ -24,7 +24,7 @@ class _homePageState extends State<homePage> {
 
   final pages = [
     const dashboard(),
-    const myTicket(),
+    const MyTicket(),
     const profilePage(),
   ];
 

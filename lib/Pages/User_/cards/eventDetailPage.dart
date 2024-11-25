@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../../../registerForEvent.dart';
+import 'RegistrationConfirmationScreen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class EventDetailPage extends StatelessWidget {
+class EventDetailPage extends StatefulWidget {
+  final String eventId; // Add eventId to uniquely identify the event
   final String eventName;
   final String eventDescription;
   final String eventMode;
@@ -17,6 +22,7 @@ class EventDetailPage extends StatelessWidget {
 
   const EventDetailPage({
     super.key,
+    required this.eventId, // Ensure eventId is passed to this page
     required this.eventName,
     required this.eventDescription,
     required this.eventMode,
@@ -30,13 +36,90 @@ class EventDetailPage extends StatelessWidget {
     required this.bannerImage,
   });
 
+  @override
+  _EventDetailPageState createState() => _EventDetailPageState();
+}
+
+class _EventDetailPageState extends State<EventDetailPage> {
+  bool isAlreadyRegistered = false; // Variable to track registration status
+
+  @override
+  void initState() {
+    super.initState();
+    checkIfUserIsRegistered();
+  }
+
+  // Check if the current user is already registered for the event
+  Future<void> checkIfUserIsRegistered() async {
+    final currentUser = FirebaseAuth.instance.currentUser;
+    if (currentUser == null) {
+      return;
+    }
+
+    try {
+      // Check if the user is already registered for this event
+      final registrationQuery = await FirebaseFirestore.instance
+          .collection('registrations')  // Ensure correct collection
+          .where('eventId', isEqualTo: widget.eventId)
+          .where('userId', isEqualTo: currentUser.uid) // Check if the user is already registered
+          .get();
+
+      setState(() {
+        isAlreadyRegistered = registrationQuery.docs.isNotEmpty; // Update the status
+      });
+    } catch (e) {
+      print("Error checking registration status: $e");
+    }
+  }
+
   Widget hSpacer(double size) {
     return SizedBox(height: size);
   }
+
   Future<void> openUrl(String address) async {
     final Uri url = Uri.parse(address);
     if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
       throw Exception('Could not launch $url');
+    }
+  }
+
+  Future<void> _registerForEvent(BuildContext context) async {
+    final currentUser = FirebaseAuth.instance.currentUser;
+    if (currentUser == null) {
+      // If the user is not authenticated
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Please log in to register for an event.")),
+      );
+      return;
+    }
+
+    try {
+      // Proceed with registration if not already registered
+      String ticketId = await registerForEvent(widget.eventId);
+
+      // Store the registration in Firestore to mark the user as registered
+      await FirebaseFirestore.instance.collection('registrations').add({
+        'eventId': widget.eventId,
+        'userId': currentUser.uid,
+        'ticketId': ticketId,
+        'timestamp': FieldValue.serverTimestamp(),
+      });
+
+      // Navigate to the Registration Confirmation Screen
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => RegistrationConfirmationScreen(
+            eventId: widget.eventId,
+            ticketId: ticketId,
+          ),
+        ),
+      );
+    } catch (e) {
+      // Show an error message if registration fails
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Registration failed: $e")),
+      );
     }
   }
 
@@ -86,7 +169,7 @@ class EventDetailPage extends StatelessWidget {
             height: 350,
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: NetworkImage(bannerImage),
+                image: NetworkImage(widget.bannerImage),
                 fit: BoxFit.cover,
               ),
             ),
@@ -102,7 +185,7 @@ class EventDetailPage extends StatelessWidget {
                   decoration: const BoxDecoration(
                     color: Colors.white,
                     borderRadius:
-                        BorderRadius.vertical(top: Radius.circular(30)),
+                    BorderRadius.vertical(top: Radius.circular(30)),
                     boxShadow: [
                       BoxShadow(
                         color: Colors.black12,
@@ -113,7 +196,7 @@ class EventDetailPage extends StatelessWidget {
                   ),
                   child: Padding(
                     padding:
-                        const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
                     child: SingleChildScrollView(
                       child: ConstrainedBox(
                         constraints: const BoxConstraints(minHeight: 550),
@@ -125,12 +208,11 @@ class EventDetailPage extends StatelessWidget {
                             ),
                             // Event Name
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween, // Ensures space between text and icons
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                // Event Name
                                 Expanded(
                                   child: Text(
-                                    eventName,
+                                    widget.eventName,
                                     style: const TextStyle(
                                       fontSize: 28,
                                       fontWeight: FontWeight.bold,
@@ -138,24 +220,17 @@ class EventDetailPage extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                // Icons
                                 Row(
                                   children: [
                                     IconButton(
-                                      onPressed: () {
-                                        openUrl(eventSocialLink);
-                                        // Handle link button action
-                                      },
+                                      onPressed: () => openUrl(widget.eventWeblink),
                                       icon: const Icon(
                                         Bootstrap.link_45deg,
                                         size: 30,
                                       ),
                                     ),
                                     IconButton(
-                                      onPressed: () {
-                                        openUrl(eventSocialLink);
-                                        // Handle global button action
-                                      },
+                                      onPressed: () => openUrl(widget.eventSocialLink),
                                       icon: const Icon(
                                         LineAwesome.instagram,
                                         size: 30,
@@ -166,9 +241,8 @@ class EventDetailPage extends StatelessWidget {
                               ],
                             ),
                             hSpacer(0),
-                            // Event Type
                             Text(
-                              eventType,
+                              widget.eventType,
                               style: const TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
@@ -176,16 +250,14 @@ class EventDetailPage extends StatelessWidget {
                               ),
                             ),
                             hSpacer(20),
-                            // Event Details
-                            _buildDetailRow("Date", eventDate),
-                            _buildDetailRow("Time", eventTime),
-                            _buildDetailRow("Venue", eventVenue),
-                            _buildDetailRow("Mode", eventMode),
-                            _buildDetailRow("Available Seats", '$eventSeats' ),
+                            _buildDetailRow("Date", widget.eventDate),
+                            _buildDetailRow("Time", widget.eventTime),
+                            _buildDetailRow("Venue", widget.eventVenue),
+                            _buildDetailRow("Mode", widget.eventMode),
+                            _buildDetailRow("Available Seats", '${widget.eventSeats}'),
                             hSpacer(20),
-                            // Event Description
                             Text(
-                              eventDescription,
+                              widget.eventDescription,
                               style: const TextStyle(
                                 fontSize: 16,
                                 height: 1.5,
@@ -209,9 +281,7 @@ class EventDetailPage extends StatelessWidget {
             child: FractionallySizedBox(
               widthFactor: 0.6,
               child: ElevatedButton(
-                onPressed: () {
-                  // Handle apply action
-                },
+                onPressed: isAlreadyRegistered ? null : () => _registerForEvent(context),  // Disable the button if already registered
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.orangeAccent,
                   padding: const EdgeInsets.symmetric(vertical: 15),
@@ -219,8 +289,8 @@ class EventDetailPage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(30),
                   ),
                 ),
-                child: const Text(
-                  "Apply Now",
+                child: Text(
+                  isAlreadyRegistered ? "Already Registered" : "Register Now",  // Change text if already registered
                   style: TextStyle(fontSize: 16, color: Colors.white),
                 ),
               ),

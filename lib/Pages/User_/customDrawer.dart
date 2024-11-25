@@ -60,7 +60,7 @@ class customDrawer extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const myTicket()),
+                MaterialPageRoute(builder: (context) => const MyTicket()),
               );
             },
           ),
