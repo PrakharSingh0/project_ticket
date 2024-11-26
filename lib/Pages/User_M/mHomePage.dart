@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:project_ticket/Pages/User_M/eventLisingPage.dart';
 import 'package:project_ticket/Pages/User_M/dashboard/mDashboard.dart';
-import 'package:project_ticket/Pages/User_M/myEvent.dart';
 import 'package:project_ticket/Pages/miscellaneous/profilePage.dart';
 import 'package:project_ticket/service/firebaseAuthService.dart';
 import 'package:project_ticket/welcome_page.dart';
@@ -26,7 +25,6 @@ class _mHomePageState extends State<mHomePage> {
 
   final pages = [
     const EventManagerDashboard(),
-    const myEvent(),
     const profilePage(),
   ];
 
@@ -91,8 +89,6 @@ class _mHomePageState extends State<mHomePage> {
           selectedFontSize: 15,
           items: const [
             BottomNavigationBarItem(icon: Icon(Icons.home), label: "Dashboard"),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.qr_code_scanner), label: "My Event"),
             BottomNavigationBarItem(
                 icon: Icon(Icons.account_circle), label: "User Profile"),
           ],

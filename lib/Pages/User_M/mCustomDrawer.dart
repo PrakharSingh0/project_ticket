@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:project_ticket/Pages/User_/myTicket.dart';
 import 'package:project_ticket/Pages/miscellaneous/profilePage.dart';
 import 'package:project_ticket/Pages/miscellaneous/helpAndSupport.dart';
 import '../../service/firebaseAuthService.dart';
@@ -54,16 +53,7 @@ class mCustomDrawer extends StatelessWidget {
               );
             },
           ),
-          ListTile(
-            leading: const Icon(Icons.qr_code_scanner),
-            title: const Text(' My Ticket '),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const MyTicket()),
-              );
-            },
-          ),
+
           ListTile(
             leading: const Icon(Icons.notifications_active),
             title: const Text(' Notification '),

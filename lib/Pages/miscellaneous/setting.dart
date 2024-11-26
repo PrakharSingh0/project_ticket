@@ -50,18 +50,7 @@ class _SettingsPageState extends State<SettingsPage> {
             value: _darkModeEnabled,
             onChanged: (value) => _toggleDarkMode(),
           ),
-          ListTile(
-            leading: const Icon(Icons.account_circle),
-            title: const Text('Account Settings'),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const AccountSettingsPage(),
-                ),
-              );
-            },
-          ),
+          //
 
           ListTile(
             leading: const Icon(Icons.help_outline),
@@ -80,53 +69,6 @@ class _SettingsPageState extends State<SettingsPage> {
             onTap: () => showLogoutConfirmation(context),
           ),
         ],
-      ),
-    );
-  }
-
-//   void _showLanguageDialog() {
-//     showDialog(
-//       context: context,
-//       builder: (context) => AlertDialog(
-//         title: const Text('Select Language'),
-//         content: const Column(
-//           mainAxisSize: MainAxisSize.min,
-//           children: [
-//             ListTile(title: Text('English')),
-//             ListTile(title: Text('Spanish')),
-//             ListTile(title: Text('French')),
-//           ],
-//         ),
-//         actions: [
-//           TextButton(
-//             onPressed: () => Navigator.pop(context),
-//             child: const Text('Cancel'),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-
-
-}
-
-class AccountSettingsPage extends StatelessWidget {
-  const AccountSettingsPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Account Settings'),
-      ),
-      body: const Center(
-        child: Padding(
-          padding: EdgeInsets.all(16.0),
-          child: Text(
-            'Manage your account settings here. Add functionality as needed.',
-            style: TextStyle(fontSize: 16),
-          ),
-        ),
       ),
     );
   }
