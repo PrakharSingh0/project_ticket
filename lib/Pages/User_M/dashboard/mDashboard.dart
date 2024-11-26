@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:icons_plus/icons_plus.dart';
 
+import 'AttendeeValidationPage.dart';
 import 'AttendeesListPage.dart';
 import 'ManagerEventDetailPage.dart'; // Your event details page
 import 'EditEventPage.dart'; // Page to edit the event details
@@ -125,7 +126,7 @@ class EventManagerDashboard extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => MangerEventDetailPage(event: event),
+                      builder: (context) => QRScanPage(eventId: event['eventId']),
                     ),
                   );
                 },
