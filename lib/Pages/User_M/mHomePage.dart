@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:project_ticket/Pages/User_M/eventLisingPage.dart';
-import 'package:project_ticket/Pages/User_M/mDashboard.dart';
+import 'package:project_ticket/Pages/User_M/dashboard/mDashboard.dart';
 import 'package:project_ticket/Pages/User_M/myEvent.dart';
 import 'package:project_ticket/Pages/miscellaneous/profilePage.dart';
 import 'package:project_ticket/service/firebaseAuthService.dart';
@@ -25,7 +25,7 @@ class _mHomePageState extends State<mHomePage> {
   final String? username = Auth().currentUser?.displayName;
 
   final pages = [
-    const mDashBoard(),
+    const EventManagerDashboard(),
     const myEvent(),
     const profilePage(),
   ];

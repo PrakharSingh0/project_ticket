@@ -138,7 +138,7 @@ class _EventCardState extends State<EventCard> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => EventDetailPage(
+                          builder: (context) => userEventDetailPage(
                             eventId: widget.eventId, // Pass eventId here
                             eventName: widget.eventName,
                             eventDescription: widget.eventDiscription,

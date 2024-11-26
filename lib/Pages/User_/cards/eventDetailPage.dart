@@ -6,7 +6,7 @@ import 'RegistrationConfirmationScreen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class EventDetailPage extends StatefulWidget {
+class userEventDetailPage extends StatefulWidget {
   final String eventId; // Add eventId to uniquely identify the event
   final String eventName;
   final String eventDescription;
@@ -20,7 +20,7 @@ class EventDetailPage extends StatefulWidget {
   final String eventTime;
   final String bannerImage;
 
-  const EventDetailPage({
+  const userEventDetailPage({
     super.key,
     required this.eventId, // Ensure eventId is passed to this page
     required this.eventName,
@@ -37,10 +37,10 @@ class EventDetailPage extends StatefulWidget {
   });
 
   @override
-  _EventDetailPageState createState() => _EventDetailPageState();
+  _userEventDetailPageState createState() => _userEventDetailPageState();
 }
 
-class _EventDetailPageState extends State<EventDetailPage> {
+class _userEventDetailPageState extends State<userEventDetailPage> {
   bool isAlreadyRegistered = false; // Variable to track registration status
 
   @override

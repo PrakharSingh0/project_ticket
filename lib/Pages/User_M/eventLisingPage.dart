@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:icons_plus/icons_plus.dart';
@@ -132,6 +133,7 @@ class _eventListingPageState extends State<eventListingPage> {
 
   Future<void> writeFireStore() async {
     final db = FirebaseFirestore.instance;
+    final String managerId = FirebaseAuth.instance.currentUser!.uid;  // Get the manager's UID
 
     final event = eventDetailsModel(
       eventName: _eventName.text.trim(),
@@ -146,10 +148,12 @@ class _eventListingPageState extends State<eventListingPage> {
       eventSocialLink: _eventSocialPage.text.trim(),
       bannerImage: _bannerImage.text.trim(),
       eventSeats: int.parse(_eventSeatsAvailibility.text.trim()),
+      managerId: managerId,  // Add managerId to the event data
     );
 
     await db.collection("eventDetails").add(event.toJson());
   }
+
 
   @override
   Widget build(BuildContext context) {
