@@ -1,16 +1,9 @@
-// Import Firebase Plugin
 import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:project_ticket/service/firebaseAuthService.dart';
-
-// Import Flutter Plugin
 import 'package:flutter/material.dart';
 
-// Import Page route
-import 'package:project_ticket/Pages/Auth_/logInPage.dart';
 
-import '../User_/homePage.dart';
 
 class SignupWidget extends StatefulWidget {
   const SignupWidget({super.key});
@@ -20,12 +13,10 @@ class SignupWidget extends StatefulWidget {
 }
 
 class _SignupWidgetState extends State<SignupWidget> {
-  String? errorMassage = '';
-  bool isLogin = true;
+  String? errorMessage = '';
   bool isLoading = false;
-  int delayTime = 500;
 
-  // Text Field Controller
+  // Text Field Controllers
   final TextEditingController _userNameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -40,110 +31,88 @@ class _SignupWidgetState extends State<SignupWidget> {
   }
 
   Future<void> createUserWithEmailAndPassword() async {
-    try {
-      await Auth().createUserWithEmailAndPassword(
-          email: _emailController.text, password: _passwordController.text);
-    } on FirebaseException {
-      setState(() {
-      });
-    }
-  }
-
-
-  Future<void> checkCredential() async {
     setState(() {
       isLoading = true;
     });
 
-    if (_emailController.text == "" || _passwordController.text == "") {
-      Timer(Duration(milliseconds: delayTime), () {
-        errorMassage = "All Credential Required";
-        _emailController.clear();
-        _passwordController.clear();
-        setState(() {
-          isLoading = false;
-        });
-      });
-    } else {
-      final user = await Auth()
-          .createUserWithEmailAndPassword(
-              email: _emailController.text, password: _passwordController.text)
-          .onError(
-        (error, stackTrace) {
-          _resetErrorMessage();
-          errorMassage = error.toString().replaceAll(RegExp(r'\[.*?\]'), '');
-          _emailController.clear();
-          _passwordController.clear();
-          setState(() {
-            isLoading = false;
-          });
-          return null;
-        },
+    try {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: _emailController.text.trim(),
+        password: _passwordController.text.trim(),
       );
-
-      if (Auth().currentUser != null) {
-        Timer(Duration(milliseconds: delayTime), () {
-          setState(() {
-            isLoading = false;
-          });
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Account Created successfully')),
-          );
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const homePage()));
-        });
-      }
+      // Navigate to HomePage on successful signup
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Account Created Successfully')),
+      );
+      Navigator.popUntil(context, (route) => route.isFirst);
+    } on FirebaseAuthException catch (e) {
+      setState(() {
+        errorMessage = e.message ?? "An error occurred";
+      });
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
     }
   }
 
-  void _resetErrorMessage() {
-    setState(() {
-      errorMassage = "";
-    });
+  bool validateInputs() {
+    final emailError = Validators.email(_emailController.text);
+    final passwordError = Validators.password(_passwordController.text);
+    final usernameError = Validators.username(_userNameController.text);
+
+    if (emailError != null) {
+      setState(() {
+        errorMessage = emailError;
+      });
+      return false;
+    }
+    if (passwordError != null) {
+      setState(() {
+        errorMessage = passwordError;
+      });
+      return false;
+    }
+    if (usernameError != null) {
+      setState(() {
+        errorMessage = usernameError;
+      });
+      return false;
+    }
+
+    return true;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        // physics: const NeverScrollableScrollPhysics(),
         child: Container(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
           decoration: const BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage("assets/back.jpg"),
-                  fit: BoxFit.fitHeight)),
+            image: DecorationImage(
+              image: AssetImage("assets/back.jpg"),
+              fit: BoxFit.cover,
+            ),
+          ),
           child: Padding(
             padding: const EdgeInsets.all(24.0),
             child: Column(
-              mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Align(
-                    alignment: Alignment.topLeft,
-                    child: SizedBox(
-                      width: 120,
-                      child: TextButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: const Row(children: [
-                          Icon(
-                            Icons.arrow_back_rounded,
-                            color: Colors.white,
-                          ),
-                          Text("Back", style: TextStyle(color: Colors.white)),
-                        ]),
-                      ),
-                    )),
-                const SizedBox(height: 100), // Spacer
+                // Align(
+                //   alignment: Alignment.topLeft,
+                //   child: TextButton.icon(
+                //     onPressed: () => Navigator.pop(context),
+                //     icon: const Icon(Icons.arrow_back_rounded, color: Colors.white),
+                //     label: const Text("Back", style: TextStyle(color: Colors.white)),
+                //   ),
+                // ),
+                const SizedBox(height: 100),
                 const Text(
                   'Join Crowd Wave',
-                  style: TextStyle(
-                      fontSize: 40,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white),
+                  style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold, color: Colors.white),
                 ),
                 const SizedBox(height: 10),
                 Text(
@@ -152,63 +121,36 @@ class _SignupWidgetState extends State<SignupWidget> {
                   style: TextStyle(fontSize: 18, color: Colors.grey[300]),
                 ),
                 const SizedBox(height: 20),
-
-                // Input Text Field ------------->
-
                 Column(
                   children: [
                     TextField(
-                      onTap: () {
-                        _resetErrorMessage();
-                      },
-                      style: const TextStyle(
-                        color: Colors.white,
-                      ),
                       controller: _userNameController,
                       decoration: const InputDecoration(
+                        labelText: 'User Name',
                         labelStyle: TextStyle(color: Colors.white),
-                        hintText: "Name",
-                        // errorText: errorMassage,
-                        labelText: 'UserName',
                       ),
-                      keyboardType: TextInputType.emailAddress,
+                      style: const TextStyle(color: Colors.white),
                     ),
                     const SizedBox(height: 16),
                     TextField(
-                      onTap: () {
-                        _resetErrorMessage();
-                      },
-                      style: const TextStyle(
-                        color: Colors.white,
-                      ),
                       controller: _emailController,
                       decoration: const InputDecoration(
-                        labelStyle: TextStyle(color: Colors.white),
-                        hintText: "xyz-123@gmail.com",
-                        // errorText: errorMassage,
                         labelText: 'Email',
+                        hintText: 'xyz-123@gmail.com',
+                        labelStyle: TextStyle(color: Colors.white),
                       ),
-                      keyboardType: TextInputType.emailAddress,
+                      style: const TextStyle(color: Colors.white),
                     ),
                     const SizedBox(height: 16),
                     TextField(
-                      onTap: () {
-                        _resetErrorMessage();
-                      },
-                      style: const TextStyle(
-                        color: Colors.white,
-                      ),
                       controller: _passwordController,
                       obscureText: !_passwordVisible,
                       decoration: InputDecoration(
-                        labelStyle: const TextStyle(color: Colors.white),
-                        // errorText: errorMassage,
                         labelText: 'Password',
+                        labelStyle: const TextStyle(color: Colors.white),
                         suffixIcon: IconButton(
                           icon: Icon(
-                            _passwordVisible
-                                ? Icons.visibility
-                                : Icons.visibility_off,
+                            _passwordVisible ? Icons.visibility : Icons.visibility_off,
                             color: Colors.white,
                           ),
                           onPressed: () {
@@ -218,93 +160,46 @@ class _SignupWidgetState extends State<SignupWidget> {
                           },
                         ),
                       ),
+                      style: const TextStyle(color: Colors.white),
                     ),
                   ],
                 ),
-
                 const SizedBox(height: 10),
                 Text(
-                  errorMassage!,
+                  errorMessage!,
                   style: const TextStyle(color: Colors.red, fontSize: 16),
                 ),
-                const SizedBox(height: 10),
-
+                const SizedBox(height: 20),
                 SizedBox(
                   width: 150,
                   height: 50,
                   child: ElevatedButton(
-                    onPressed: () async {
-                      // Handle login
-                      checkCredential();
+                    onPressed: isLoading ? null : () {
+                      if (validateInputs()) {
+                        createUserWithEmailAndPassword();
+                      }
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.orangeAccent,
-                      padding: const EdgeInsets.symmetric(vertical: 16),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(28),
                       ),
-                      textStyle:
-                          const TextStyle(fontSize: 16, color: Colors.white),
                     ),
                     child: isLoading
-                        ? const SizedBox(
-                            width: 20,
-                            child: CircularProgressIndicator(),
-                          )
-                        : const Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.login,
-                                color: Colors.white,
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Text('Sign Up',
-                                  style: TextStyle(color: Colors.white)),
-                            ],
-                          ),
+                        ? const CircularProgressIndicator(color: Colors.white)
+                        : const Text('Sign Up',style: TextStyle(color: Colors.white),),
                   ),
                 ),
-
-                // const SizedBox(height: 10),
-                // const Text('OR', style: TextStyle(color: Colors.white)),
-                // const SizedBox(height: 10),
-                // SizedBox(
-                //   width: 225,
-                //   child: ElevatedButton.icon(
-                //     onPressed: () {
-                //       print('Sign up with Google pressed ...');
-                //     },
-                //     icon: const Icon(Icons.login_outlined, color: Colors.white),
-                //     label: const Text('Sign up with Google',
-                //         style: TextStyle(color: Colors.white)),
-                //     style: ElevatedButton.styleFrom(
-                //       padding: const EdgeInsets.symmetric(
-                //           vertical: 16, horizontal: 32),
-                //       backgroundColor: Colors.grey[800],
-                //       shape: RoundedRectangleBorder(
-                //           borderRadius: BorderRadius.circular(28)),
-                //     ),
-                //   ),
-                // ),
                 const SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('Already have an account?',
-                        style: TextStyle(color: Colors.grey[300])),
+                    Text('Already have an account?', style: TextStyle(color: Colors.grey[300])),
                     TextButton(
                       onPressed: () {
-                        print('Navigate to Login ...');
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const LoginPageWidget()));
+                        Navigator.pushReplacementNamed(context, '/login');
                       },
-                      child: const Text('Log In',
-                          style: TextStyle(color: Colors.blue)),
+                      child: const Text('Log In', style: TextStyle(color: Colors.blue)),
                     ),
                   ],
                 ),
@@ -323,27 +218,28 @@ class _SignupWidgetState extends State<SignupWidget> {
 }
 
 class Validators {
-  static email(String? txt) {
+  static String? email(String? txt) {
     if (txt == null || txt.isEmpty) {
-      return "Email Required !";
-    } else {
-      return;
+      return "Email is required!";
+    } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(txt)) {
+      return "Enter a valid email!";
     }
+    return null;
   }
 
-  static password(String? txt) {
+  static String? password(String? txt) {
     if (txt == null || txt.isEmpty) {
-      return "Password Required !";
-    } else {
-      return;
+      return "Password is required!";
+    } else if (txt.length < 6) {
+      return "Password must be at least 6 characters!";
     }
+    return null;
   }
 
-  static username(String? txt) {
+  static String? username(String? txt) {
     if (txt == null || txt.isEmpty) {
-      return "Password Required !";
-    } else {
-      return;
+      return "User Name is required!";
     }
+    return null;
   }
 }

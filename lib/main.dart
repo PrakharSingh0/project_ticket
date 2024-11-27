@@ -1,6 +1,8 @@
 // Import Firebase Plugins
 import 'package:firebase_core/firebase_core.dart';
-import 'package:project_ticket/welcome_page.dart';
+import 'package:project_ticket/service/AuthStateHandler.dart';
+import 'Pages/Auth_/logInPage.dart';
+import 'Pages/Auth_/signUpPage.dart';
 import 'firebase_options.dart';
 
 // Import Flutter plugin
@@ -14,9 +16,13 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(
-    const MaterialApp(
+    MaterialApp(
+      routes: {
+        '/login': (context) => const LoginPageWidget(),
+        '/signup': (context) => const SignupWidget(),
+      },
       debugShowCheckedModeBanner: false,
-      home: welcome_page(),
+      home: const AuthStateHandler(),
     ),
   ); //runApp
 }

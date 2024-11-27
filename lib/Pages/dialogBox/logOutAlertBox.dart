@@ -1,7 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../../service/firebaseAuthService.dart';
-import '../../welcome_page.dart';
 
 
 void showLogoutConfirmation(BuildContext context) {
@@ -16,17 +15,19 @@ void showLogoutConfirmation(BuildContext context) {
           child: const Text('Cancel'),
         ),
         TextButton(
-          onPressed: () {
-            // Add logout functionality here
-            Auth().signOut();
-            Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                    const welcome_page()));
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Logged out successfully')),
-            );
+          onPressed: () async {
+            // Perform logout
+            try {
+              await FirebaseAuth.instance.signOut();
+              Navigator.pop(context);
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text("Logged out successfully")),
+              );
+            } catch (e) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text("Logout failed: ${e.toString()}")),
+              );
+            }
           },
           child: const Text('Logout'),
         ),
@@ -36,26 +37,4 @@ void showLogoutConfirmation(BuildContext context) {
 }
 
 
-void showLanguageDialog() {
-  var context;
-  showDialog(
-    context: context,
-    builder: (context) => AlertDialog(
-      title: const Text('Select Language'),
-      content: const Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          ListTile(title: Text('English')),
-          ListTile(title: Text('Spanish')),
-          ListTile(title: Text('French')),
-        ],
-      ),
-      actions: [
-        TextButton(
-          onPressed: () => Navigator.pop(context),
-          child: const Text('Cancel'),
-        ),
-      ],
-    ),
-  );
-}
+
