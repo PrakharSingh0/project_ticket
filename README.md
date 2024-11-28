@@ -24,7 +24,7 @@
   <img src="https://github.com/user-attachments/assets/9405c27f-5ab8-4634-b9a7-e922d3faa10e" width="200" style="margin: 20px;">
   <img src="https://github.com/user-attachments/assets/9270be36-aeba-42a6-b057-8abc454036ba" width="200" style="margin: 20px;">
   <img src="https://github.com/user-attachments/assets/07c62693-bec6-4820-99be-1854ef81dea9" width="200" style="margin: 20px;">
-</
+</p>
 
 ### **Event Manager Features, Event Listing, and Validation**
 <p align="left">
