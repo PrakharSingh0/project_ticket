@@ -7,7 +7,8 @@
 
 ## Screenshots/Images
 
-- Welcome & Auth Screen 
+- Welcome & Auth Screen
+- ![image](https://github.com/user-attachments/assets/be91af2e-6bc6-4a3e-8308-e4d38513aa03)
 <img scr="https://github.com/user-attachments/assets/be91af2e-6bc6-4a3e-8308-e4d38513aa03" width="200">
 <img scr="https://github.com/user-attachments/assets/f2417280-e21f-445d-9f8c-a415f82d224d" width="200">
 <img scr="https://github.com/user-attachments/assets/e9d0aafb-ea8f-4234-9992-7602c56a4d06" height="400">
