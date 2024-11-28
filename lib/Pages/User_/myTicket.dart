@@ -241,10 +241,10 @@ class _MyTicketState extends State<MyTicket> {
                 ),
                 const SizedBox(height: 10),
                 // Instructions
-                Text(
+                const Text(
                   "This QR code is your unique ticket for the event. Please present it at the entry point.",
                   textAlign: TextAlign.center,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 12,
                     color: Colors.grey,
                   ),
